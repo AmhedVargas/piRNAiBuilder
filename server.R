@@ -11,6 +11,7 @@
 #Load libraries
 library(shiny)
 library(shinythemes)
+library(Biostrings)
 
 shinyServer(function(input, output, session) {
     
@@ -99,7 +100,7 @@ shinyServer(function(input, output, session) {
     
     ##Main search function
     observeEvent(input$actionPI, {
-        ErrorFLag=0
+        ErrorFlag = 0
         
         matches=as.integer(input$selectMM)
         mm=c(5,4,3,2,1,0)[matches]
@@ -142,15 +143,28 @@ shinyServer(function(input, output, session) {
             }
         
         ##ProduceApE output
-            if(ErrorFlag==0){
+            if(ErrorFlag == 0){
                 output$ErrorMessage <- renderText({
                     paste("Sequences used:",Seltab[idx,2])
                 })
                 
                 output$downloadseq <- renderUI({
-                        write(paste(">Optimized_cDNA:Codon-",optsin,"\n",aaaads,SeqtoOpt,"\n",sep="",collapse=""),paste("WorkingSpace/users/",session_id,"/piRNAs.ape", sep=""))
+                    uno="cgcgcttgacgcgctagtcaactaacataaaaaaggtgaaacattgcgaggatacatagaaaaaacaatacttcgaattcatttttcaattacaaatcctgaaatgtttcactgtgttcctataagaaaacattgaaacaaaatattAagT"
+                    seq1=as.character(Seltab[idx[1],2])
+                    dos="ctaattttgattttgattttgaaatcgaatttgcaaatccaattaaaaatcattttctgataattagacagttccttatcgttaattttattatatctatcgagttagaaattgcaacgaagataatgtcttccaaatactgaaaatttgaaaatatgtt"
+                    seq2=as.character(reverseComplement(DNAString(as.character(Seltab[idx[2],2]))))
+                    tres="AttGccagaactcaaaatatgaaatttttatagttttgttgaaacagtaagaaaatcttgtaattactgtaaactgtttgctttttttaaagtcaacctacttcaaatctacttcaaaaattataatgtttcaaattacataactgtgt"
+                    seq3= as.character(reverseComplement(DNAString(as.character(Seltab[idx[3],2]))))
+                    cuatro="ActgtagagcttcaatgttgataagatttattaacacagtgaaacaggtaatagttgtttgttgcaaaatcggaaatctctacatttcatatggtttttaattacaggtttgttttataaaataattgtgtgatggatattattttcagacctcatactaatctgcaaaccttcaaacaatatgtgaagtctactctgtttcactcaaccattcatttcaatttggaaaaaaatcaaagaaatgttgaaaaattttcctgtttcaacattatgacaaaaatgttatgattttaataaaaaCaaT"
+                    seq4=as.character(Seltab[idx[4],2])
+                    cinco="ttctgtttttcttagaagtgttttccggaaacgcgtaattggttttatcacaaatcgaaaacaaacaaaaatttttttaattatttctttgctagttttgtagttgaaaattcactataatcatgaataagtgagctgcccaagtaaacaaagaaaatttggcagcggccgacaactaccgggttgcccgatttatcagtggagga"
+                    seq5= as.character(reverseComplement(DNAString( as.character(Seltab[idx[5],2]))))
+                    seis="AtcTaatgtgatgtacacggttttcatttaaaaacaaattgaaacagaaatgactacattttcaaattgtctatttttgctgtgtttattttgccaccaacaaT"
+                    seq6=as.character(Seltab[idx[6],2])
+                    siete="tcaatctagtaaactcacttaatgcaattcctccagccacatatgtaaacgttgtatacatgcagaaaacggttttttggttttaatgggaacttttgacaaattgttcgaaaatcttaagctgtcccatttcagttgggtgatcgattt"
+                        write(paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete),sep="",collapse=""),paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""))
                         
-                    downloadButton('DownApeOut', 'Download Ape File')
+                    downloadButton('DownApeOut', 'Download seq File')
                 })
                 
                 
@@ -162,11 +176,11 @@ shinyServer(function(input, output, session) {
     ##Retrieve output ape
     output$DownApeOut <- downloadHandler(
         filename <- function() {
-            paste("piRNAi", "ape", sep=".")
+            paste("piRNAi", "txt", sep=".")
         },
         
         content <- function(file) {
-            file.copy(paste("WorkingSpace/users/",session_id,"/piRNAs.ape", sep=""), file)
+            file.copy(paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), file)
         },
     )
 })  
