@@ -29,13 +29,13 @@ shinyUI(
             ####Genome browser
             tabPanel("piRNAi",
                      mainPanel(
-                         textAreaInput("genesearch", label = "Pick a gene", value = "", placeholder= "WormbaseID, transcript or common name", rows=1),
+                         textAreaInput("geneinput", label = "Pick a gene", value = "", placeholder= "WormbaseID, transcript or common name", rows=1),
                          actionButton("actiongenesearch", label = "Search gene"),
                          hr(),
                          uiOutput("DesignControls"),
                          hr(),
-                         tableOutput(otherPis),
-                         verbatimTextOutput("PartialResult"),
+                         #tableOutput(otherPis),
+                         verbatimTextOutput("ErrorMessage"),
                          uiOutput("downloadseq")
                          )
             ),

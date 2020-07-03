@@ -18,160 +18,155 @@ shinyServer(function(input, output, session) {
     session_id <- session$token
     
     ##Create temporary folder for unique user
-    system(paste("mkdir -p WormT/users/",session_id,sep=""))
+    system(paste("mkdir -p WorkingSpace/users/",session_id,sep=""))
     
     ###On exit, force the remove of directory
     ##Attention: Interactive sessions create problems because the listening of the server stops in main directory and not in sub directory
     session$onSessionEnded(function(){
-        system(paste("rm -rf WormT/users/",session_id,sep=""))
+        system(paste("rm -rf WorkingSpace/users/",session_id,sep=""))
     }
     )
     
     ###
-    ###Data explorer
-    ###Format input table
-    ChrisPAT=read.table("WormT/PATCsGenesChristianData.tsv",sep="\t", header= TRUE)
-    rownames(ChrisPAT)=as.character(ChrisPAT[,2])
-    ##Assign Yes, No, unknown insted of TRUE, FALSE, NA
-    ChrisPAT$GermlineExpression[which(!(ChrisPAT$GermlineExpression))] <- "No"
-    ChrisPAT$GermlineExpression[which(ChrisPAT$GermlineExpression == TRUE)] <- "Yes"
-    ChrisPAT$GermlineExpression[which(is.na(ChrisPAT$GermlineExpression))] <- "unknown"
+    ###Data
+    Genes=read.table("WorkingSpace/Genes.txt",sep="\t", header= FALSE)
+    locus=unique(as.character(Genes[,6]))
+    locus=locus[-c(which(locus == ""))]
+    #file=paste(c("DataBase/",as.character(Genes[1,4]),"_",as.character(Genes[1,5]),"_",as.character(Genes[1,6]),".txt"),sep="",collapse="")
     
-    ##Click action - inputs to reactive variable geneval that is used in a function to generate table
-    geneweb_tooltip <- function(x) {
-        if (is.null(x)) return(NULL)
-        if (is.null(x$Wormbase.ID)) return(NULL)
-        # Pick out the gene with this ID
-        geneval$id <- as.character(x$Wormbase.ID)
-        return(NULL)
-    }
     
-    geneval <- reactiveValues(id=c(""))
-    
-    ##Function that returns the gene info from main table and formats it into html
-    geneinfo = function(x){
-        if (is.null(x)) return(NULL)
-        gidi=""
-        if(x %in% as.character(ChrisPAT$Wormbase.ID)){gidi = x}
-        if(x %in% as.character(ChrisPAT$Gene.name)){gidi = rownames(ChrisPAT[which(as.character(ChrisPAT$Gene.name) == x),])}
-        if(gidi ==""){return(paste("Gene not found! try with Wormbase ID"))}
+    ##Main search function
+    observeEvent(input$actiongenesearch, {
+        type="Not"
+        wbid=""
+        mygene =input$geneinput
         
-        gene <- ChrisPAT[as.character(gidi),]
+        if(as.character(mygene) %in% as.character(Genes[,4])){type=4}
+        if(as.character(mygene) %in% as.character(Genes[,5])){type=5}
+        if(as.character(mygene) %in% locus){type=6}
         
-        paste0("<b>Gene: ", gene$Gene.name, "</b><br>Wormbase ID: ",
-               "<a href=\"https://www.wormbase.org/species/c_elegans/gene/", gene$Wormbase.ID,"\">", gene$Wormbase.ID, "</a><br>",
-               "Transcript analyzed: ", gene$Transcript.name, "<br>",
-               "Chromosome: ", gene$Chromosome, "<br>",
-               "Relative position: ", gene$Relative.loc.chromosome, "<br>",
-               "Gene size: ", gene$Bin.size, "<br>",
-               "Number of phased bases: ", gene$Bases.with.PATC.55, "<br>",
-               "Phased bases in gene: ", as.integer(gene$Frequency.of.PATCs.55 * 100), "%<br>",
-               "Total PATC score: ", gene$Total.value.of.PATC.algorithm, "<br>",
-               "PATC density: ", gene$PATC.density, "<br>",
-               "Germline expression: ", gene$GermlineExpression, "<sup>1</sup><br>",
-               "RPKM Oocyte expression<sup>2</sup>: ", gene$stoekius_oocyte_rpkm, "<br>",
-               "RPKM Sperm expression<sup>3</sup>: ", gene$spermatogenic_gonad_fem.3_RPKM_Ortiz_2014,"<br>","<br>",
-               "<p align=\"justify\">",
-               "<font size=\"2\">",
-               "<sup>1</sup>: Oocyte Reads Per Kilobase of transcript per Million mapped reads (RPKM) > 2<br>",
-               "<sup>2</sup>: Stoeckius, <i>et al.</i> (2019). Large-scale sorting of <i>C. elegans</i> embryos reveals the dynamics of small RNA expression.
-                                  <i>Nat. Methods 6(10)</i>: 745-751<br>",
-               "<sup>3</sup>: Ortiz, <i>et al.</i> (2014). A New Dataset of Spermatogenic <i>vs.</i> Oogenic Transcriptomes in the Nematode <i>Caenorhabditis elegans</i>.
-             <i>G3: GENES, GENOMES, GENETICS 4(9)</i>: 1765-1772<br>",
-               "</font>",
-               "</p>"
-        )
-    }
-    
-    geteinfo = function(x){
-        if (is.null(x)) return(NULL)
-        gidi=""
-        if(x %in% as.character(ChrisPAT$Wormbase.ID)){gidi = x}
-        if(x %in% as.character(ChrisPAT$Gene.name)){gidi = rownames(ChrisPAT[which(as.character(ChrisPAT$Gene.name) == x),])}
-        if(gidi ==""){return(paste("Gene not found! try with Wormbase ID"))}
-        
-        gene <- ChrisPAT[as.character(gidi),]
-        
-        #runjs(paste("igv.browser.search(",gene$Chromosome,":",gene$Gene.start,"-",gene$Gene.end,")", sep=""))
-        #paste0("<script>igv.browser.search(",gene$Chromosome,":",gene$Gene.start,"-",gene$Gene.end,")</script>")
-
-        
-        igvloc=paste(gene$Chromosome,":",gene$Gene.start,"-",gene$Gene.end,sep="")
-        session$sendCustomMessage("gene-coordinates", igvloc)
-    }
-    
-    ##Observers for action button search
-    observeEvent(input$actionsearch, {
-        mygene =input$genetext
-        output$geneid <- renderUI({
-            HTML(
-                geneinfo(mygene)
-            )
-        })
-    }, ignoreInit = T)
-    
-    ##Observers for action button browser
-    observeEvent(input$actionbrow, {
-        gege =input$genebrow
-        output$genebrowsearch <- renderUI({
-            HTML(
-                geteinfo(gege)
-            )
-        })
-        
-        getPage<-function(dir) {
+        if(type == "Not"){
+            output$DesignControls <- renderUI({
+                HTML("<b>Gene not found</b>")
+                })
+            }else{
+                wbid=as.character(unique(Genes[which(mygene==Genes[,type]),4]))
+        output$DesignControls <- renderUI({
+            fluidRow(
+                
+                selectInput("isoform", label = HTML("<b>Select Isoform
+                                                           [<a href=\"\" onclick=\"$('#explain_isoform').toggle(); return false;\">info</a>]
+                                                           </b>"), 
+                            unique(Genes[which(as.character(Genes[,4])==wbid),5])),
+                
+                HTML("
+                     <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_isoform\">
+            Isoforms based on the WormBase 270 annotations</div></p>
+                     "),
+                selectInput("selectMM", label = HTML("<b>Uniqueness of sequence
+                                                           [<a href=\"\" onclick=\"$('#explain_uniqueness').toggle(); return false;\">info</a>]
+                                                           </b>"), 
+                            choices = list("Up to 5 Mismatches across genome" = 1, "Up to 4 Mismatches across genome" = 2, "Up to 3 Mismatches across genome" = 3, "Up to 2 Mismatches across genome" = 4,
+                                           "Up to 1 Mismatches across genome" = 5,"Up to 0 Mismatches across genome" = 6),
+                            selected = 1),
+                HTML("
+                     <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_uniqueness\">
+            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans genome and verified its uniqueness up uo n Mismatches.
+                                                 </div></p>
+                     "),
+                radioButtons("cluster", label = HTML("Select piRNA cluster
+                                                     [<a href=\"\" onclick=\"$('#explain_cluster').toggle(); return false;\">info</a>]
+                                                     "),
+                             choices = list("21ur-1224" = 1), selected = 1, width='100%'),
+                HTML("
+                     <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_cluster\">
+            For the moment, we use the cluster 21ur-1224 as a template to express 6 piRNAis fragments that are antisente to the transcript being targeted
+                                     </div></p>
+                     "),
+            checkboxInput("FlaControl", label = HTML("<b>Design control fragment
+                                                               [<a href=\"\" onclick=\"$('#explain_control').toggle(); return false;\">info</a>]
+                                                               </b>"), value = FALSE, width='100%'),
+            HTML("<p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_control\">
+            Reverse complement sequences so they have the same orientation as the coding sequence
+                                     </div></p>"),
+            actionButton("actionPI", label = "Create piRNAi fragment")
             
-            return(includeHTML(paste(paste("WormT/tracks/",dir,"/igv.html", sep=""))))
-        }
-        
-        output$igvcoord <-renderUI({getPage(input$selectTRACK)})
-        
-        
-    }, ignoreInit = T)
-    
-    ##Observe Js value
-    observeEvent(input$jsValue, {
-        cat("\nMessage Received\n")
-        cat(paste(input$jsValue),sep="\n")
-        output$igv_id <- renderText({
-            paste("Your sequence to sinthetize is:", input$jsValue)
-        })
-    })
-    
-    #output$tablepiRNA = DT::renderDataTable(DT::datatable({
-        #tt=read.table(paste("WormT/users/",session_id,"/tab.file", sep=""),sep="\t",header=TRUE)
-        #colnames(tt)=c("Sequence ID", "Number of bases in phase", "Phasing frequency", "Total PATC value", "Phasing density")
-        #tt[,3]=round(tt[,3], 2)
-        #tt[,4]=round(tt[,4], 2)
-        #tt[,5]=round(tt[,5], 2)
-        #tt
-        
-    #}, options = list(dom = 't')))
-    
-    ##External function to include the HTML output
-    #It has to be now relocated within temporary directory
-    getPage<-function(dir) {
-        
-        return(includeHTML(paste(paste("WormT/tracks/",dir,"/igv.html", sep=""))))
-    }
-    #output$igvcoord<-renderUI({getPage(session_id)})
-    
-    output$igvcoord <-renderUI({getPage(input$selectTRACK)})
-    
-    #Observer reactive to changes in geneval to create table
-    observeEvent(geneval$id, {
-        mygene = geneval$id
-        output$geneid<- renderUI({
-            HTML(
-                geneinfo(mygene)
             )
         })
+        }
     }, ignoreInit = T)
     
-    observeEvent(input$actionbrow,{
-        ###Add things to show output
-        output$igvcoord <-renderUI({getPage(input$selectTRACK)})
+    
+    ##Main search function
+    observeEvent(input$actionPI, {
+        ErrorFLag=0
+        
+        matches=as.integer(input$selectMM)
+        mm=c(5,4,3,2,1,0)[matches]
+        isoform = input$isoform
+        wbid = as.character(unique(Genes[which(isoform==Genes[,5]),4]))
+        loc = as.character(unique(Genes[which(isoform==Genes[,5]),6]))
+        
+        file=paste(c("DataBase/",as.character(wbid),"_",as.character(isoform),"_",as.character(loc),".txt"),sep="",collapse="")
+        
+        tab=read.table(file,sep="\t",header=F)
+        tab[,4]=as.integer((unlist(strsplit(as.character(tab[,2]),";")))[c(FALSE,TRUE)])
+        tab[,2]=as.character((unlist(strsplit(as.character(tab[,2]),";")))[c(TRUE,FALSE)])
+        
+        Seltab=tab[which(tab[,3]>=mm),]
+        
+        if(nrow(Seltab)< 6){
+            output$ErrorMessage <- renderText({
+                paste("Error: Not enough piRNAi fragments were found with the characterisitics described. Try to change to other parameters")
+            })
+            ErrorFlag=1
+        }else{
+            Seltab=Seltab[order(Seltab[,1]),]
+            pos=quantile(Seltab[,1],c(0,.2,.4,.6,.8,1))
+            idx=c()
+            idx=append(idx,which.min(abs(Seltab[,1]-pos[1])))
+            idx=append(idx,which.min(abs(Seltab[,1]-pos[2])))
+            idx=append(idx,which.min(abs(Seltab[,1]-pos[3])))
+            idx=append(idx,which.min(abs(Seltab[,1]-pos[4])))
+            idx=append(idx,which.min(abs(Seltab[,1]-pos[5])))
+            idx=append(idx,which.min(abs(Seltab[,1]-pos[6])))
+            
+            if(length(which(dist(Seltab[idx,1])<=20)) > 0){
+                
+                output$ErrorMessage <- renderText({
+                    paste("Error: The sole piRNAi fragments found seem overlapping. Try to change its distribution and or the parameters")
+                })
+                ErrorFlag=1
+                
+                }
+            }
+        
+        ##ProduceApE output
+            if(ErrorFlag==0){
+                output$ErrorMessage <- renderText({
+                    paste("Sequences used:",Seltab[idx,2])
+                })
+                
+                output$downloadseq <- renderUI({
+                        write(paste(">Optimized_cDNA:Codon-",optsin,"\n",aaaads,SeqtoOpt,"\n",sep="",collapse=""),paste("WorkingSpace/users/",session_id,"/piRNAs.ape", sep=""))
+                        
+                    downloadButton('DownApeOut', 'Download Ape File')
+                })
+                
+                
+            }
         
     }, ignoreInit = T)
     
+    
+    ##Retrieve output ape
+    output$DownApeOut <- downloadHandler(
+        filename <- function() {
+            paste("piRNAi", "ape", sep=".")
+        },
+        
+        content <- function(file) {
+            file.copy(paste("WorkingSpace/users/",session_id,"/piRNAs.ape", sep=""), file)
+        },
+    )
 })  
