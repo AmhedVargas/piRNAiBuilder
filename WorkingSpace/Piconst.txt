@@ -1,0 +1,85 @@
+     promoter        106..110
+                     /locus_tag="ruby"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        complement(392..396)
+                     /locus_tag="ruby(1)"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        complement(561..565)
+                     /locus_tag="ruby(2)"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        780..784
+                     /locus_tag="ruby(3)"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        complement(1111..1115)
+                     /locus_tag="ruby(4)"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        1129..1133
+                     /locus_tag="ruby (deg)"
+                     /ApEinfo_label="ruby (deg)"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     primer_bind     151..151
+                     /locus_tag="21ur-421 (not enriched, 1507 reads)"
+                     /ApEinfo_label="21ur-421 (not enriched, 1507 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(352..352)
+                     /locus_tag="21ur-1089 (male enriched, 62 reads)"
+                     /ApEinfo_label="21ur-1089 (male enriched, 62 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(521..521)
+                     /locus_tag="21ur-1224 (female enriched, 46 reads)"
+                     /ApEinfo_label="21ur-1224 (female enriched, 46 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     824..824
+                     /locus_tag="21ur-488 (male enriched, 386 reads)"
+                     /ApEinfo_label="21ur-488 (male enriched, 386 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(1071..1071)
+                     /locus_tag="21ur-2948 (male enriched, 233 reads)"
+                     /ApEinfo_label="21ur-2948 (male enriched, 233 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     1174..1174
+                     /locus_tag="21ur-3471 (female enriched, 116 reads)"
+                     /ApEinfo_label="21ur-3471 (female enriched, 116 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+ORIGIN

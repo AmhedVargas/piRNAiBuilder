@@ -6,6 +6,7 @@
 #Load libraries
 library(shiny)
 library(shinythemes)
+library(DT)
 
 # Define User interface
 shinyUI(
@@ -26,8 +27,8 @@ shinyUI(
             ###Theme of shiny
             theme = shinytheme("sandstone"),
             
-            ####Genome browser
-            tabPanel("piRNAi",
+            ###Simple
+            tabPanel("Simple",
                      mainPanel(
                          textAreaInput("geneinput", label = "Pick a gene", value = "", placeholder= "WormbaseID, transcript or common name", rows=1),
                          actionButton("actiongenesearch", label = "Search gene"),
@@ -35,9 +36,34 @@ shinyUI(
                          uiOutput("DesignControls"),
                          hr(),
                          #tableOutput(otherPis),
-                         verbatimTextOutput("ErrorMessage"),
+                         htmlOutput("SelPiTabSummary"),
+                         tableOutput('SelPiTab'),
                          uiOutput("downloadseq")
                          )
+            ),
+            
+            tabPanel("Advanced",
+                     mainPanel(
+                         h3("Make your own construct:"),
+                         fluidRow(
+                             column(width = 2,textAreaInput("piRNAseq1", label="", rows=1, placeholder = "First piRNAi")),
+                             column(width = 2,textAreaInput("piRNAseq2", label="", rows=1, placeholder = "Second piRNAi")),
+                             column(width = 2,textAreaInput("piRNAseq3", label="", rows=1, placeholder = "Third piRNAi")),
+                             column(width = 2,textAreaInput("piRNAseq4", label="", rows=1, placeholder = "Fourth piRNAi")),
+                             column(width = 2,textAreaInput("piRNAseq5", label="", rows=1, placeholder = "Fifth piRNAi")),
+                             column(width = 2,textAreaInput("piRNAseq6", label="", rows=1, placeholder = "Sixth piRNAi"))
+                         ),
+                         actionButton("actionconstruct", label = "Produce piRNAi fragment"),
+                         verbatimTextOutput("AdvancedErrorMessage"),
+                         uiOutput("downloadconstruct"),
+                         hr(),
+                         textAreaInput("Advancedgeneinput", label = "Pick a gene", value = "", placeholder= "WormbaseID, transcript or common name", rows=1),
+                         actionButton("actionAdvsearch", label = "Search piRNAi fragments"),
+                         hr(),
+                         uiOutput("AdvDesignControls"),
+                         hr(),
+                         DT::dataTableOutput('AllPiTab')
+                     )
             ),
             ###About
             tabPanel("About",
