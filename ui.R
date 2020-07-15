@@ -23,16 +23,17 @@ shinyUI(
                "),
         tags$style(type='text/css', '#AdvancedFragment {white-space: pre-wrap;}'),
         tags$style(type='text/css', '#SimpleFragment {white-space: pre-wrap;}'),
+        tags$style(type='text/css', '#piBoxes .form-group {margin-bottom: 0px; margin-top: 0px;}'),
         #Main tab pages
         navbarPage(
-            title="piRNAi design",
+            title="piRNAi cluster designer",
             ###Theme of shiny
             theme = shinytheme("sandstone"),
             
             ###Simple
             tabPanel("Simple",
                      mainPanel(
-                         textAreaInput("geneinput", label = "Pick a gene", value = "", resize="none", placeholder= "WormbaseID, transcript or common name", rows=1),
+                         textAreaInput("geneinput", label = "Target gene", value = "", resize="none", placeholder= "WormbaseID, transcript or common name", rows=1),
                          actionButton("actiongenesearch", label = "Search gene"),
                          hr(),
                          uiOutput("DesignControls"),
@@ -50,23 +51,35 @@ shinyUI(
                          h3("Make your own construct:"),
                     fluidRow(
                         column(4,
-                        textAreaInput("piRNAseq1", label="", rows=1, cols=21, resize="none", placeholder = "First piRNAi"),
-                        textAreaInput("piRNAseq2", label="", rows=1, cols=21, resize="none", placeholder = "Second piRNAi"),
-                        textAreaInput("piRNAseq3", label="", rows=1, cols=21, resize="none", placeholder = "Third piRNAi"),
-                        textAreaInput("piRNAseq4", label="", rows=1, cols=21, resize="none", placeholder = "Fourth piRNAi"),
-                        textAreaInput("piRNAseq5", label="", rows=1, cols=21, resize="none", placeholder = "Fifth piRNAi"),
-                        textAreaInput("piRNAseq6", label="", rows=1, cols=21, resize="none", placeholder = "Sixth piRNAi")),
+                               tags$div(id="piBoxes",
+                                        class="my_class",
+                        textAreaInput("piRNAseq1", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 1"),
+                        textAreaInput("piRNAseq2", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 2"),
+                        textAreaInput("piRNAseq3", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 3"),
+                        textAreaInput("piRNAseq4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 4"),
+                        textAreaInput("piRNAseq5", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 5"),
+                        textAreaInput("piRNAseq6", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 6")),
+                        br(),
+                        radioButtons("clustercon", label = HTML("Select piRNA cluster
+                                                     [<a href=\"\" onclick=\"$('#explain_cluster').toggle(); return false;\">info</a>]
+                                                     "),
+                                     choices = list("21ur-1224" = 1), selected = 1, width='100%'),
+                        HTML("
+                     <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_cluster\">
+            For the moment, we use the cluster 21ur-1224 as a template to express 6 piRNAis fragments that are antisente to the transcript being targeted
+                                     </div></p>
+                     ")),
                         column(8,
                         verbatimTextOutput("AdvancedFragment"),
                         uiOutput("downloadconstruct"))),
                         
                      fluidRow(
-                         column(2,actionButton("actionclean", label = "Clean boxes")),
-                         column(2,actionButton("actionconstruct", label = "Produce piRNAi fragment"))),
+                         column(2,actionButton("actionclean", label = "Reset")),
+                         column(2,actionButton("actionconstruct", label = "Generate piRNAi cluster"))),
                          verbatimTextOutput("AdvancedErrorMessage"),
                          hr(),
-                         textAreaInput("Advancedgeneinput", label = "Pick a gene", value = "", resize="none", placeholder= "WormbaseID, transcript or common name", rows=1),
-                         actionButton("actionAdvsearch", label = "Search piRNAi fragments"),
+                         textAreaInput("Advancedgeneinput", label = "Target gene", value = "", resize="none", placeholder= "WormbaseID, transcript or common name", rows=1),
+                         actionButton("actionAdvsearch", label = "Search for specific piRNAs"),
                          hr(),
                          uiOutput("AdvDesignControls"),
                          hr(),

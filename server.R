@@ -56,7 +56,7 @@ shinyServer(function(input, output, session) {
         output$DesignControls <- renderUI({
             fluidRow(
                 
-                selectInput("isoform", label = HTML("<b>Select Isoform
+                selectInput("isoform", label = HTML("<b>Targeted isoform
                                                            [<a href=\"\" onclick=\"$('#explain_isoform').toggle(); return false;\">info</a>]
                                                            </b>"), 
                             unique(Genes[which(as.character(Genes[,4])==wbid),5])),
@@ -65,11 +65,11 @@ shinyServer(function(input, output, session) {
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_isoform\">
             Isoforms based on the WormBase 270 annotations</div></p>
                      "),
-                selectInput("selectMM", label = HTML("<b>Uniqueness of sequence
+                selectInput("selectMM", label = HTML("<b>Synthetic piRNA off-target sites
                                                            [<a href=\"\" onclick=\"$('#explain_uniqueness').toggle(); return false;\">info</a>]
-                                                           </b>"), 
-                            choices = list("at least 5 mismatches to genome" = 1, "at least 4 mismatches to genome" = 2, "at least 3 mismatches to genome" = 3,
-                                           "at least 5 mismatches to exome" = 4, "at least 4 mismatches to exome" = 5, "at least 3 mismatches to exome" = 6),
+                                                           <br>(minimum # of mismatches)</b>"), 
+                            choices = list(">= 5 mismatches to genome" = 1, ">= 4 mismatches to genome" = 2, ">= 3 mismatches to genome" = 3,
+                                           ">= 5 mismatches to exome" = 4, ">= 4 mismatches to exome" = 5, ">= 3 mismatches to exome" = 6),
                             selected = 1),
                 HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_uniqueness\">
@@ -85,13 +85,13 @@ shinyServer(function(input, output, session) {
             For the moment, we use the cluster 21ur-1224 as a template to express 6 piRNAis fragments that are antisente to the transcript being targeted
                                      </div></p>
                      "),
-            checkboxInput("FlaControl", label = HTML("<b>Design control fragment
+            checkboxInput("FlaControl", label = HTML("<b>Generate negative control
                                                                [<a href=\"\" onclick=\"$('#explain_control').toggle(); return false;\">info</a>]
                                                                </b>"), value = FALSE, width='100%'),
             HTML("<p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_control\">
             Reverse complement sequences so they have the same orientation as the coding sequence
                                      </div></p>"),
-            actionButton("actionPI", label = "Create piRNAi fragment")
+            actionButton("actionPI", label = "Generate piRNAi cluster")
             
             )
         })
@@ -166,11 +166,11 @@ shinyServer(function(input, output, session) {
                 posssi=as.integer(Pitab[,1]*(geneend-genest))
                 Pitab=cbind(paste(as.integer(Pitab[,1]*(geneend-genest)),"to", as.integer(Pitab[,1]*(geneend-genest)) + 19),Pitab[,c(2,3)])
                 
-                colnames(Pitab)=c("Location","Sequence","%GC")
-                colnames(Pitab)[1]=paste("Location in cDNA ","(",(geneend-genest),"bp long)",sep="")
+                colnames(Pitab)=c("Location","Sequence (antisense to target)","%GC")
+                colnames(Pitab)[1]=paste("cDNA location","(",(geneend-genest),"bp long)",sep="")
                 Pitab=Pitab[order(posssi),]
                 
-                output$SelPiTabSummary <- renderUI({ HTML(paste0("<b>Selected sequences: </b>",sep=""))})
+                output$SelPiTabSummary <- renderUI({ HTML(paste0("<b>Synthetic piRNAs</b>",sep=""))})
                 output$SelPiTab=renderTable(Pitab)
                 
                 ##Ape output
@@ -186,18 +186,25 @@ shinyServer(function(input, output, session) {
                         }
                     
                     uno="cgcgcttgacgcgctagtcaactaacataaaaaaggtgaaacattgcgaggatacatagaaaaaacaatacttcgaattcatttttcaattacaaatcctgaaatgtttcactgtgttcctataagaaaacattgaaacaaaatattAagT"
+                    uno=tolower(uno)
                     seq1=as.character(Seltab[idx[1],2])
                     dos="ctaattttgattttgattttgaaatcgaatttgcaaatccaattaaaaatcattttctgataattagacagttccttatcgttaattttattatatctatcgagttagaaattgcaacgaagataatgtcttccaaatactgaaaatttgaaaatatgtt"
+                    dos=tolower(dos)
                     seq2=as.character(reverseComplement(DNAString(as.character(Seltab[idx[2],2]))))
                     tres="AttGccagaactcaaaatatgaaatttttatagttttgttgaaacagtaagaaaatcttgtaattactgtaaactgtttgctttttttaaagtcaacctacttcaaatctacttcaaaaattataatgtttcaaattacataactgtgt"
+                    tres=tolower(tres)
                     seq3= as.character(reverseComplement(DNAString(as.character(Seltab[idx[3],2]))))
                     cuatro="ActgtagagcttcaatgttgataagatttattaacacagtgaaacaggtaatagttgtttgttgcaaaatcggaaatctctacatttcatatggtttttaattacaggtttgttttataaaataattgtgtgatggatattattttcagacctcatactaatctgcaaaccttcaaacaatatgtgaagtctactctgtttcactcaaccattcatttcaatttggaaaaaaatcaaagaaatgttgaaaaattttcctgtttcaacattatgacaaaaatgttatgattttaataaaaaCaaT"
+                    cuatro=tolower(cuatro)
                     seq4=as.character(Seltab[idx[4],2])
                     cinco="ttctgtttttcttagaagtgttttccggaaacgcgtaattggttttatcacaaatcgaaaacaaacaaaaatttttttaattatttctttgctagttttgtagttgaaaattcactataatcatgaataagtgagctgcccaagtaaacaaagaaaatttggcagcggccgacaactaccgggttgcccgatttatcagtggagga"
+                    cinco=tolower(cinco)
                     seq5= as.character(reverseComplement(DNAString( as.character(Seltab[idx[5],2]))))
                     seis="AtcTaatgtgatgtacacggttttcatttaaaaacaaattgaaacagaaatgactacattttcaaattgtctatttttgctgtgtttattttgccaccaacaaT"
+                    seis=tolower(seis)
                     seq6=as.character(Seltab[idx[6],2])
                     siete="tcaatctagtaaactcacttaatgcaattcctccagccacatatgtaaacgttgtatacatgcagaaaacggttttttggttttaatgggaacttttgacaaattgttcgaaaatcttaagctgtcccatttcagttgggtgatcgattt"
+                    siete=tolower(siete)
                         #write(paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete),sep="",collapse=""),paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""))
 
                     write(paste("LOCUS",paste(wbid,"_21ur_1224_",sep="",collapse=""),"1344 bp ds-DNA","linear",paste(c(unlist(strsplit(date()," ")))[c(3,2,5)],sep="",collapse="-"),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""))
@@ -296,10 +303,10 @@ shinyServer(function(input, output, session) {
                     write("//",paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
                     
                     output$SimpleFragment <- renderText({
-                        paste("Output sequence:\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
+                        paste("Recoded 21ur-1224 piRNA cluster\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
                     })
                     
-                    downloadButton('DownApeOut', 'Download piRNAi fragment')
+                    downloadButton('DownApeOut', 'Download annotated genbank file')
                 })
                 
                 
@@ -320,12 +327,20 @@ shinyServer(function(input, output, session) {
         pipi6=as.character(input$piRNAseq6)
         
         ##Check for size
+        if((nchar(pipi1) == 0) | (nchar(pipi2) == 0) | (nchar(pipi3) == 0) | (nchar(pipi4) == 0) | (nchar(pipi5) == 0) | (nchar(pipi6) == 0)){
+            AdvancedErrorFlag=1
+            output$AdvancedErrorMessage <- renderText({
+                paste("Please pick at least 6 synthetic piRNAs")
+            })
+        }
+        
+        if(AdvancedErrorFlag == 0){
         if((nchar(pipi1) != 20) | (nchar(pipi2) != 20) | (nchar(pipi3) != 20) | (nchar(pipi4) != 20) | (nchar(pipi5) != 20) | (nchar(pipi6) != 20)){
             AdvancedErrorFlag=1
             output$AdvancedErrorMessage <- renderText({
                 paste("Error: piRNAi sequences should be 20bp long")
             })
-            }
+            }}
         
         #Check for input characters
         toto=paste(pipi1,pipi2,pipi3,pipi4,pipi5,pipi6,sep="",collapse="")
@@ -351,18 +366,25 @@ shinyServer(function(input, output, session) {
             output$downloadconstruct <- renderUI({
             
                 uno="cgcgcttgacgcgctagtcaactaacataaaaaaggtgaaacattgcgaggatacatagaaaaaacaatacttcgaattcatttttcaattacaaatcctgaaatgtttcactgtgttcctataagaaaacattgaaacaaaatattAagT"
+                uno=tolower(uno)
                 seq1=as.character(pipi1)
                 dos="ctaattttgattttgattttgaaatcgaatttgcaaatccaattaaaaatcattttctgataattagacagttccttatcgttaattttattatatctatcgagttagaaattgcaacgaagataatgtcttccaaatactgaaaatttgaaaatatgtt"
+                dos=tolower(dos)
                 seq2=as.character(reverseComplement(DNAString(as.character(pipi2))))
                 tres="AttGccagaactcaaaatatgaaatttttatagttttgttgaaacagtaagaaaatcttgtaattactgtaaactgtttgctttttttaaagtcaacctacttcaaatctacttcaaaaattataatgtttcaaattacataactgtgt"
+                tres=tolower(tres)
                 seq3= as.character(reverseComplement(DNAString(as.character(pipi3))))
                 cuatro="ActgtagagcttcaatgttgataagatttattaacacagtgaaacaggtaatagttgtttgttgcaaaatcggaaatctctacatttcatatggtttttaattacaggtttgttttataaaataattgtgtgatggatattattttcagacctcatactaatctgcaaaccttcaaacaatatgtgaagtctactctgtttcactcaaccattcatttcaatttggaaaaaaatcaaagaaatgttgaaaaattttcctgtttcaacattatgacaaaaatgttatgattttaataaaaaCaaT"
+                cuatro=tolower(cuatro)
                 seq4=as.character(pipi4)
                 cinco="ttctgtttttcttagaagtgttttccggaaacgcgtaattggttttatcacaaatcgaaaacaaacaaaaatttttttaattatttctttgctagttttgtagttgaaaattcactataatcatgaataagtgagctgcccaagtaaacaaagaaaatttggcagcggccgacaactaccgggttgcccgatttatcagtggagga"
+                cinco=tolower(cinco)
                 seq5= as.character(reverseComplement(DNAString( as.character(pipi5))))
                 seis="AtcTaatgtgatgtacacggttttcatttaaaaacaaattgaaacagaaatgactacattttcaaattgtctatttttgctgtgtttattttgccaccaacaaT"
+                seis=tolower(seis)
                 seq6=as.character(pipi6)
                 siete="tcaatctagtaaactcacttaatgcaattcctccagccacatatgtaaacgttgtatacatgcagaaaacggttttttggttttaatgggaacttttgacaaattgttcgaaaatcttaagctgtcccatttcagttgggtgatcgattt"
+                siete=tolower(siete)
                 
                 write(paste("LOCUS",paste("Undefined_21ur_1224_",sep="",collapse=""),"1344 bp ds-DNA","linear",paste(c(unlist(strsplit(date()," ")))[c(3,2,5)],sep="",collapse="-"),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""))
                 write(paste("DEFINITION",".",sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
@@ -457,10 +479,10 @@ shinyServer(function(input, output, session) {
                 write("//",paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
                 
                 output$AdvancedFragment <- renderText({
-                    paste("Output sequence:\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
+                    paste("Recoded 21ur-1224 piRNA cluster\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
                 })
                 
-            downloadButton('DownConOut', 'Download piRNAi fragment')
+            downloadButton('DownConOut', 'Download annotated genbank file')
             
                 })
             
@@ -489,16 +511,16 @@ shinyServer(function(input, output, session) {
             output$AdvDesignControls <- renderUI({
                 fluidRow(
                     
-                    column(width = 3,selectInput("AdvIsoform", label = HTML("<b>Select Isoform
+                    column(width = 3,selectInput("AdvIsoform", label = HTML("<b>Targeted isoform
                                                            [<a href=\"\" onclick=\"$('#explain_isoform_advanced').toggle(); return false;\">info</a>]
                                                            </b>"), 
                                 unique(Genes[which(as.character(Genes[,4])==wbid),5]))),
                     
-                    column(width = 3, selectInput("AdvSelectMM", label = HTML("<b>Uniqueness of sequence
-                    [<a href=\"\" onclick=\"$('#explain_uniqueness_advanced').toggle(); return false;\">info</a>]
+                    column(width = 3, selectInput("AdvSelectMM", label = HTML("<b>Synthetic piRNA off-target sites
+                    [<a href=\"\" onclick=\"$('#explain_uniqueness_advanced').toggle(); return false;\">info</a>]<br>(minimum # of mismatches)
                                                            </b>"),
-                                                  choices = list("at least 5 mismatches to genome" = 1, "at least 4 mismatches to genome" = 2, "at least 3 mismatches to genome" = 3,
-                                                                 "at least 5 mismatches to exome" = 4, "at least 4 mismatches to exome" = 5, "at least 3 mismatches to exome" = 6),
+                                                  choices = list(">= 5 mismatches to genome" = 1, ">= 4 mismatches to genome" = 2, ">= 3 mismatches to genome" = 3,
+                                                                 ">= 5 mismatches to exome" = 4, ">= 4 mismatches to exome" = 5, ">= 3 mismatches to exome" = 6),
                                                                       selected = 1)),
                     column(width = 3, sliderInput("Posslider", label = HTML("<b>Relative position in Genebody (%)
                                                                             [<a href=\"\" onclick=\"$('#explain_Posgene').toggle(); return false;\">info</a>]
@@ -600,7 +622,8 @@ shinyServer(function(input, output, session) {
                 row.names = 1:nrow(datatab)
                 )
             
-            colnames(Pdata)[1]=paste("Location in cDNA ","(",(geneend-genest),"bp long)",sep="")
+            colnames(Pdata)[1]=paste("cDNA location ","(",(geneend-genest),"bp long)",sep="")
+            colnames(Pdata)[2]="Sequence (antisense to target)"
             Pdata=Pdata[order(as.integer(datatab[,1]*((geneend-genest)))),]
             rownames(Pdata)=1:nrow(Pdata)
             Pdata
