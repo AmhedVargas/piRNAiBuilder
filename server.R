@@ -68,12 +68,12 @@ shinyServer(function(input, output, session) {
                 selectInput("selectMM", label = HTML("<b>Uniqueness of sequence
                                                            [<a href=\"\" onclick=\"$('#explain_uniqueness').toggle(); return false;\">info</a>]
                                                            </b>"), 
-                            choices = list("Up to 5 Mismatches across genome" = 1, "Up to 4 Mismatches across genome" = 2, "Up to 3 Mismatches across genome" = 3, "Up to 2 Mismatches across genome" = 4,
-                                           "Up to 1 Mismatches across genome" = 5,"Up to 0 Mismatches across genome" = 6),
+                            choices = list("at least 5 mismatches to genome" = 1, "at least 4 mismatches to genome" = 2, "at least 3 mismatches to genome" = 3,
+                                           "at least 5 mismatches to exome" = 4, "at least 4 mismatches to exome" = 5, "at least 3 mismatches to exome" = 6),
                             selected = 1),
                 HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_uniqueness\">
-            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans genome and verified its uniqueness up to n Mismatches.
+            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans genome and verified its uniqueness up to n mismatches, i.e. even with n base pairs changed the sequence remains unique.
                                                  </div></p>
                      "),
                 radioButtons("cluster", label = HTML("Select piRNA cluster
@@ -104,7 +104,7 @@ shinyServer(function(input, output, session) {
         ErrorFlag = 0
         
         matches=as.integer(input$selectMM)
-        mm=c(5,4,3,2,1,0)[matches]
+        mm=c(5,4,3,5,4,3)[matches]
         isoform = input$isoform
         ControlEx = input$FlaControl
         
@@ -118,8 +118,12 @@ shinyServer(function(input, output, session) {
         file=paste(c("DataBase/",as.character(wbid),"_",as.character(isoform),"_",as.character(loc),".txt"),sep="",collapse="")
         
         tab=read.table(file,sep="\t",header=F)
-        tab[,4]=as.integer((unlist(strsplit(as.character(tab[,2]),";")))[c(FALSE,TRUE)])
+        tab[,5]=as.integer((unlist(strsplit(as.character(tab[,2]),";")))[c(FALSE,TRUE)])
         tab[,2]=as.character((unlist(strsplit(as.character(tab[,2]),";")))[c(TRUE,FALSE)])
+        
+        if(matches>3){
+        tab[,3]=tab[,4]
+        }
         
         Seltab=tab[which(tab[,3]>=mm),]
         
@@ -153,23 +157,19 @@ shinyServer(function(input, output, session) {
             if(ErrorFlag == 0){
                 
                 ##Table results
-                Pitab=Seltab[idx,c(1,2,4)]
+                Pitab=Seltab[idx,c(1,2,5)]
                 
                 
                 Pitab[,1]=c(Pitab[,1]-genest)/(geneend-genest)
                 if(strand =="-"){Pitab[,1]= 1 - as.numeric(Pitab[,1])}
-                position=c()
-                for(val in Pitab[,1]){
-                    posssi="Unkwon"
-                    if((val >= 0)&(val <= 0.25)){posssi="Proximal to 5' end"}
-                    if((val >= 0.25)&(val <= 0.75)){posssi="Centered around isoform"}
-                    if((val >= 0.75)&(val <= 1)){posssi="Proximal to 3' end"}
-                    position=append(position,posssi)
-                    }
                 
-                Pitab=cbind(position,Pitab[,c(2,3)])
+                posssi=as.integer(Pitab[,1]*(geneend-genest))
+                Pitab=cbind(paste(as.integer(Pitab[,1]*(geneend-genest)),"to", as.integer(Pitab[,1]*(geneend-genest)) + 19),Pitab[,c(2,3)])
                 
                 colnames(Pitab)=c("Location","Sequence","%GC")
+                colnames(Pitab)[1]=paste("Location in cDNA ","(",(geneend-genest),"bp long)",sep="")
+                Pitab=Pitab[order(posssi),]
+                
                 output$SelPiTabSummary <- renderUI({ HTML(paste0("<b>Selected sequences: </b>",sep=""))})
                 output$SelPiTab=renderTable(Pitab)
                 
@@ -294,6 +294,10 @@ shinyServer(function(input, output, session) {
                     write(paste("     1261 ",paste(partseq[127:132],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
                     write(paste("     1321 ",paste(partseq[133:length(partseq)],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
                     write("//",paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
+                    
+                    output$SimpleFragment <- renderText({
+                        paste("Output sequence:\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
+                    })
                     
                     downloadButton('DownApeOut', 'Download piRNAi fragment')
                 })
@@ -452,6 +456,9 @@ shinyServer(function(input, output, session) {
                 write(paste("     1321 ",paste(partseq[133:length(partseq)],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
                 write("//",paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
                 
+                output$AdvancedFragment <- renderText({
+                    paste("Output sequence:\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
+                })
                 
             downloadButton('DownConOut', 'Download piRNAi fragment')
             
@@ -490,8 +497,8 @@ shinyServer(function(input, output, session) {
                     column(width = 3, selectInput("AdvSelectMM", label = HTML("<b>Uniqueness of sequence
                     [<a href=\"\" onclick=\"$('#explain_uniqueness_advanced').toggle(); return false;\">info</a>]
                                                            </b>"),
-                                                  choices = list("Up to 5 Mismatches across genome" = 1, "Up to 4 Mismatches across genome" = 2, "Up to 3 Mismatches across genome" = 3,
-                                                                 "Up to 2 Mismatches across genome" = 4,"Up to 1 Mismatches across genome" = 5,"Up to 0 Mismatches across genome" = 6),
+                                                  choices = list("at least 5 mismatches to genome" = 1, "at least 4 mismatches to genome" = 2, "at least 3 mismatches to genome" = 3,
+                                                                 "at least 5 mismatches to exome" = 4, "at least 4 mismatches to exome" = 5, "at least 3 mismatches to exome" = 6),
                                                                       selected = 1)),
                     column(width = 3, sliderInput("Posslider", label = HTML("<b>Relative position in Genebody (%)
                                                                             [<a href=\"\" onclick=\"$('#explain_Posgene').toggle(); return false;\">info</a>]
@@ -511,7 +518,7 @@ shinyServer(function(input, output, session) {
 
                     HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_uniqueness_advanced\">
-            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans genome and verified its uniqueness up to n Mismatches.
+            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans genome and verified its uniqueness up to n mismatches, i.e. even with n base pairs changed the sequence remains unique.
                                                  </div></p>
                      "),
                     
@@ -549,7 +556,7 @@ shinyServer(function(input, output, session) {
         file=paste(c("DataBase/",as.character(wbid),"_",as.character(ADVisoform),"_",as.character(loc),".txt"),sep="",collapse="")
         
         tab=read.table(file,sep="\t",header=F)
-        tab[,4]=as.integer((unlist(strsplit(as.character(tab[,2]),";")))[c(FALSE,TRUE)])
+        tab[,5]=as.integer((unlist(strsplit(as.character(tab[,2]),";")))[c(FALSE,TRUE)])
         tab[,2]=as.character((unlist(strsplit(as.character(tab[,2]),";")))[c(TRUE,FALSE)])
         tab[,1]=c(tab[,1]-genest)/(geneend-genest)
         
@@ -559,15 +566,18 @@ shinyServer(function(input, output, session) {
         output$AllPiTab <- DT::renderDataTable({
             datatab = tab
             matches=as.integer(input$AdvSelectMM)
-            mm=c(5,4,3,2,1,0)[matches]
+            mm=c(5,4,3,5,4,3)[matches]
             minGC=input$Gcslider[1]
             maxGC=input$Gcslider[2]
             minPos=input$Posslider[1]/100
             maxPos=input$Posslider[2]/100
+            if(matches>3){
+                datatab[,3]=datatab[,4]
+                }
             
             datatab = datatab[which(datatab[,3]>=mm),]
             
-            datatab = datatab[which((datatab[,4]>=minGC)&(datatab[,4]<=maxGC)),]
+            datatab = datatab[which((datatab[,5]>=minGC)&(datatab[,5]<=maxGC)),]
             
             datatab = datatab[which((datatab[,1]>=minPos)&(datatab[,1]<=maxPos)),]
             
@@ -581,14 +591,18 @@ shinyServer(function(input, output, session) {
             }
             
             Pdata=data.frame(
-                Location = position,
+                #Location = position,
+                Location = paste(as.integer(datatab[,1]*((geneend-genest))), "to", as.integer(datatab[,1]*((geneend-genest)))+19),
                 Sequence = datatab[,2],
-                GCcontent = datatab[,4],
+                GCcontent = datatab[,5],
                 Select = shinyInput(actionButton, as.character(datatab[,2]), 'button_', label = "Add to contruct", onclick = 'Shiny.onInputChange(\"select_button\",  this.id)' ),
                 stringsAsFactors = FALSE,
                 row.names = 1:nrow(datatab)
                 )
             
+            colnames(Pdata)[1]=paste("Location in cDNA ","(",(geneend-genest),"bp long)",sep="")
+            Pdata=Pdata[order(as.integer(datatab[,1]*((geneend-genest)))),]
+            rownames(Pdata)=1:nrow(Pdata)
             Pdata
         #},server = FALSE, escape = FALSE, selection = 'none'))
         },server = FALSE, escape = FALSE, selection = 'none')
@@ -681,4 +695,14 @@ shinyServer(function(input, output, session) {
         vecseq=unlist(strsplit(x,""))
         return((countPattern("C",x)+countPattern("G",x))/length(vecseq))
     }
+    
+    ##Clean boxes
+    observeEvent(input$actionclean, {
+        updateTextAreaInput(session, "piRNAseq1", value = "")
+        updateTextAreaInput(session, "piRNAseq2", value = "")
+        updateTextAreaInput(session, "piRNAseq3", value = "")
+        updateTextAreaInput(session, "piRNAseq4", value = "")
+        updateTextAreaInput(session, "piRNAseq5", value = "")
+        updateTextAreaInput(session, "piRNAseq6", value = "")
+        })
 })  

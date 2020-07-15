@@ -21,6 +21,8 @@ shinyUI(
                           border-right-color: transparent}
                .navbar-default .navbar-brand:hover {color: #ffffff;}
                "),
+        tags$style(type='text/css', '#AdvancedFragment {white-space: pre-wrap;}'),
+        tags$style(type='text/css', '#SimpleFragment {white-space: pre-wrap;}'),
         #Main tab pages
         navbarPage(
             title="piRNAi design",
@@ -30,7 +32,7 @@ shinyUI(
             ###Simple
             tabPanel("Simple",
                      mainPanel(
-                         textAreaInput("geneinput", label = "Pick a gene", value = "", placeholder= "WormbaseID, transcript or common name", rows=1),
+                         textAreaInput("geneinput", label = "Pick a gene", value = "", resize="none", placeholder= "WormbaseID, transcript or common name", rows=1),
                          actionButton("actiongenesearch", label = "Search gene"),
                          hr(),
                          uiOutput("DesignControls"),
@@ -38,6 +40,7 @@ shinyUI(
                          #tableOutput(otherPis),
                          htmlOutput("SelPiTabSummary"),
                          tableOutput('SelPiTab'),
+                         verbatimTextOutput("SimpleFragment"),
                          uiOutput("downloadseq")
                          )
             ),
@@ -45,19 +48,24 @@ shinyUI(
             tabPanel("Advanced",
                      mainPanel(
                          h3("Make your own construct:"),
-                         fluidRow(
-                             column(width = 2,textAreaInput("piRNAseq1", label="", rows=1, placeholder = "First piRNAi")),
-                             column(width = 2,textAreaInput("piRNAseq2", label="", rows=1, placeholder = "Second piRNAi")),
-                             column(width = 2,textAreaInput("piRNAseq3", label="", rows=1, placeholder = "Third piRNAi")),
-                             column(width = 2,textAreaInput("piRNAseq4", label="", rows=1, placeholder = "Fourth piRNAi")),
-                             column(width = 2,textAreaInput("piRNAseq5", label="", rows=1, placeholder = "Fifth piRNAi")),
-                             column(width = 2,textAreaInput("piRNAseq6", label="", rows=1, placeholder = "Sixth piRNAi"))
-                         ),
-                         actionButton("actionconstruct", label = "Produce piRNAi fragment"),
+                    fluidRow(
+                        column(4,
+                        textAreaInput("piRNAseq1", label="", rows=1, cols=21, resize="none", placeholder = "First piRNAi"),
+                        textAreaInput("piRNAseq2", label="", rows=1, cols=21, resize="none", placeholder = "Second piRNAi"),
+                        textAreaInput("piRNAseq3", label="", rows=1, cols=21, resize="none", placeholder = "Third piRNAi"),
+                        textAreaInput("piRNAseq4", label="", rows=1, cols=21, resize="none", placeholder = "Fourth piRNAi"),
+                        textAreaInput("piRNAseq5", label="", rows=1, cols=21, resize="none", placeholder = "Fifth piRNAi"),
+                        textAreaInput("piRNAseq6", label="", rows=1, cols=21, resize="none", placeholder = "Sixth piRNAi")),
+                        column(8,
+                        verbatimTextOutput("AdvancedFragment"),
+                        uiOutput("downloadconstruct"))),
+                        
+                     fluidRow(
+                         column(2,actionButton("actionclean", label = "Clean boxes")),
+                         column(2,actionButton("actionconstruct", label = "Produce piRNAi fragment"))),
                          verbatimTextOutput("AdvancedErrorMessage"),
-                         uiOutput("downloadconstruct"),
                          hr(),
-                         textAreaInput("Advancedgeneinput", label = "Pick a gene", value = "", placeholder= "WormbaseID, transcript or common name", rows=1),
+                         textAreaInput("Advancedgeneinput", label = "Pick a gene", value = "", resize="none", placeholder= "WormbaseID, transcript or common name", rows=1),
                          actionButton("actionAdvsearch", label = "Search piRNAi fragments"),
                          hr(),
                          uiOutput("AdvDesignControls"),

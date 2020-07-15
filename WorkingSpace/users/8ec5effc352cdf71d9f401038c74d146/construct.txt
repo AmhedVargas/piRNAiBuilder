@@ -1,0 +1,162 @@
+LOCUS     Undefined_21ur_1224_     1344 bp ds-DNA     linear     14-Jul-2020
+DEFINITION     .
+ACCESSION     .
+VERSION     .
+SOURCE     .
+ORGANISM     .
+COMMENT     Recoded 21ur-1224 locus.
+COMMENT     piRNA1 AAATTGAGGCATAAAGAGTA
+COMMENT     piRNA2 AGGAATCGATTTACCGAACA
+COMMENT     piRNA3 CAGGAATCGATTTACCGAAC
+COMMENT     piRNA4 AAGTCGTTCAGGAATCGATT
+COMMENT     piRNA5 GAAGTCGTTCAGGAATCGAT
+COMMENT     piRNA6 AGAAGTCGTTCAGGAATCGA
+COMMENT     Generated using wormbuilder.dev/piRNAi/
+COMMENT     
+COMMENT     ApEinfo:methylated:1
+FEATURES             Location/Qualifiers
+     primer_bind     152..171
+                          /locus_tag="piRNA1"
+                          /ApEinfo_label="piRNA1"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(332..351)
+                          /locus_tag="piRNA2"
+                          /ApEinfo_label="piRNA2"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(501..520)
+                          /locus_tag="piRNA3"
+                          /ApEinfo_label="piRNA3"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     825..844
+                          /locus_tag="piRNA4"
+                          /ApEinfo_label="piRNA4"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(1051..1070)
+                          /locus_tag="piRNA5"
+                          /ApEinfo_label="piRNA5"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     1175..1194
+                          /locus_tag="piRNA6"
+                          /ApEinfo_label="piRNA6"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     promoter        106..110
+                     /locus_tag="ruby"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        complement(392..396)
+                     /locus_tag="ruby(1)"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        complement(561..565)
+                     /locus_tag="ruby(2)"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        780..784
+                     /locus_tag="ruby(3)"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        complement(1111..1115)
+                     /locus_tag="ruby(4)"
+                     /ApEinfo_label="ruby"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     promoter        1129..1133
+                     /locus_tag="ruby (deg)"
+                     /ApEinfo_label="ruby (deg)"
+                     /ApEinfo_fwdcolor="#ffd478"
+                     /ApEinfo_revcolor="#ff9300"
+                     /ApEinfo_graphicformat="arrow_data {{0 1 2 0 0 -1} {} 0}
+                     width 5 offset 0"
+     primer_bind     151..151
+                     /locus_tag="21ur-421 (not enriched, 1507 reads)"
+                     /ApEinfo_label="21ur-421 (not enriched, 1507 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(352..352)
+                     /locus_tag="21ur-1089 (male enriched, 62 reads)"
+                     /ApEinfo_label="21ur-1089 (male enriched, 62 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(521..521)
+                     /locus_tag="21ur-1224 (female enriched, 46 reads)"
+                     /ApEinfo_label="21ur-1224 (female enriched, 46 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     824..824
+                     /locus_tag="21ur-488 (male enriched, 386 reads)"
+                     /ApEinfo_label="21ur-488 (male enriched, 386 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(1071..1071)
+                     /locus_tag="21ur-2948 (male enriched, 233 reads)"
+                     /ApEinfo_label="21ur-2948 (male enriched, 233 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+     primer_bind     1174..1174
+                     /locus_tag="21ur-3471 (female enriched, 116 reads)"
+                     /ApEinfo_label="21ur-3471 (female enriched, 116 reads)"
+                     /ApEinfo_fwdcolor="#75d5ff"
+                     /ApEinfo_revcolor="#d783ff"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0
+                     -0.5} {} 0} width 5 offset 0"
+ORIGIN
+        1 cgcgcttgac gcgctagtca actaacataa aaaaggtgaa acattgcgag gatacataga
+       61 aaaaacaata cttcgaattc atttttcaat tacaaatcct gaaatgtttc actgtgttcc
+      121 tataagaaaa cattgaaaca aaatattAag TAAATTGAGG CATAAAGAGT Actaattttg
+      181 attttgattt tgaaatcgaa tttgcaaatc caattaaaaa tcattttctg ataattagac
+      241 agttccttat cgttaatttt attatatcta tcgagttaga aattgcaacg aagataatgt
+      301 cttccaaata ctgaaaattt gaaaatatgt tTGTTCGGTA AATCGATTCC TAttGccaga
+      361 actcaaaata tgaaattttt atagttttgt tgaaacagta agaaaatctt gtaattactg
+      421 taaactgttt gcttttttta aagtcaacct acttcaaatc tacttcaaaa attataatgt
+      481 ttcaaattac ataactgtgt GTTCGGTAAA TCGATTCCTG Actgtagagc ttcaatgttg
+      541 ataagattta ttaacacagt gaaacaggta atagttgttt gttgcaaaat cggaaatctc
+      601 tacatttcat atggttttta attacaggtt tgttttataa aataattgtg tgatggatat
+      661 tattttcaga cctcatacta atctgcaaac cttcaaacaa tatgtgaagt ctactctgtt
+      721 tcactcaacc attcatttca atttggaaaa aaatcaaaga aatgttgaaa aattttcctg
+      781 tttcaacatt atgacaaaaa tgttatgatt ttaataaaaa CaaTAAGTCG TTCAGGAATC
+      841 GATTttctgt ttttcttaga agtgttttcc ggaaacgcgt aattggtttt atcacaaatc
+      901 gaaaacaaac aaaaattttt ttaattattt ctttgctagt tttgtagttg aaaattcact
+      961 ataatcatga ataagtgagc tgcccaagta aacaaagaaa atttggcagc ggccgacaac
+     1021 taccgggttg cccgatttat cagtggagga ATCGATTCCT GAACGACTTC AtcTaatgtg
+     1081 atgtacacgg ttttcattta aaaacaaatt gaaacagaaa tgactacatt ttcaaattgt
+     1141 ctatttttgc tgtgtttatt ttgccaccaa caaTAGAAGT CGTTCAGGAA TCGAtcaatc
+     1201 tagtaaactc acttaatgca attcctccag ccacatatgt aaacgttgta tacatgcaga
+     1261 aaacggtttt ttggttttaa tgggaacttt tgacaaattg ttcgaaaatc ttaagctgtc
+     1321 ccatttcagt tgggtgatcg attt
+//
