@@ -1,0 +1,80 @@
+LOCUS     _21ur-1692_     1558bp ds-DNA     linear     -Aug-17:41:44
+DEFINITION     .
+ACCESSION     .
+VERSION     .
+SOURCE     .
+ORGANISM     C.elegans
+COMMENT     Recoded 21ur-1692 locus via Advanced Search.
+COMMENT     piRNA 1 GGCGATGCGACCAACTGTTT
+COMMENT     piRNA 2 CGGCGATGCGACCAACTGTT
+COMMENT     piRNA 3 CCGGCGATGCGACCAACTGT
+COMMENT     piRNA 4 ACCGGCGATGCGACCAACTG
+COMMENT     piRNA 5 GACCGGCGATGCGACCAACT
+COMMENT     piRNA 6 AAAAATATGGGCCATCGGCA
+COMMENT     Generated using wormbuilder.dev/piRNAi/
+COMMENT     ApEinfo:methylated:1
+FEATURES             Location/Qualifiers
+     primer_bind     complement(151..170)
+                          /locus_tag="piRNA 1"
+                          /ApEinfo_label="piRNA 1"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     266..285
+                          /locus_tag="piRNA 2"
+                          /ApEinfo_label="piRNA 2"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(383..402)
+                          /locus_tag="piRNA 3"
+                          /ApEinfo_label="piRNA 3"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(732..751)
+                          /locus_tag="piRNA 4"
+                          /ApEinfo_label="piRNA 4"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     1162..1181
+                          /locus_tag="piRNA 5"
+                          /ApEinfo_label="piRNA 5"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+     primer_bind     complement(1388..1407)
+                          /locus_tag="piRNA 6"
+                          /ApEinfo_label="piRNA 6"
+                     /ApEinfo_fwdcolor="#00ff00"
+                     /ApEinfo_revcolor="#ff0000"
+                     /ApEinfo_graphicformat="arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0"
+ORIGIN
+     1 ttcgtggtgc acttatcttt ctccttcaaa ttgaaaactc agtttttaat tatagtcaaa
+    61 tctcttttgc tgacaggtcc aaagtacttt attatttcat attatataaa attcattctc
+   121 gaatttattt ataaattttc gctgagtcaa AAACAGTTGG TCGCATCGCC actgactaac
+   181 aaaaacccct gtcaatttac ttgtaatgtg aaactgtatc ggtttcatat tatctatgat
+   241 tcgagtacat tgtttcaaat tcaatCGGCG ATGCGACCAA CTGTTatttt acgctggttt
+   301 gaaaatttga aatattccaa aataaattat ttagttttcg ttttttgtac attgtcataa
+   361 aacattttgg ttttttttaa caACAGTTGG TCGCATCGCC GGacttaaaa tcaaaaattg
+   421 ttacacttta taacagttca ttgaaactga aaattatttt cttttcccaa ataataatac
+   481 catcaaatgt cgtggtgtac tcatcttttc cttttcttct tttttttcaa tttctccttc
+   541 aaatctctac acactcttca ctgccaatct ttttttcttt ccttatccaa aagcacactt
+   601 ttgtgcagag taaataatgc actttgtgaa aaaaaaacta tttttaaaac tgtatttttt
+   661 taagtttggc aatttttgag aaaatttcaa caaaatctga tatagattgg aatttaaatg
+   721 gttcaaattt gCAGTTGGTC GCATCGCCGG Tatctattca aagttttatt cgaagttttt
+   781 aacagacact tgaaacagtg taataatttt ctgacaaaaa ttaaaacaaa tgttactact
+   841 ttgcttttct tactttatcc gttttttatc acccttattt ttcagtcaac cctagcaacg
+   901 ttaccgacgg aatcggtagg actacaccga ctgcatcaaa tttgggaaga agccgtgaga
+   961 atttgagttt caatcaacac cgcccagacc atccttcgtc atattttgat agtttggagc
+  1021 atggtgagca ttttatatta aaacagttgt tttggtgttc atattactaa tgtctgaata
+  1081 ctaacttgca ttaaaattgg aaattaaaaa aattactgtt tctcaaaagt attttcaata
+  1141 cctatatttt tttgctacag tGACCGGCGA TGCGACCAAC Tcaatatttt caaatatttt
+  1201 ataccagatt tttcgaaaaa gttgaatttt caattaacaa taacgcattt atgcattttt
+  1261 cactcttttt tgagatttaa tgctgaaaaa atagttctga aaatgacaaa agttatgttt
+  1321 tcaatatttt ttatcaaact aaatttattt aatttgttaa ctgttgcttt tttgtttttc
+  1381 ttcaagtTGC CGATGGCCCA TATTTTTatc ttcgaagcaa cttatttgat gttttataaa
+  1441 cgacctgaaa catactggtg atgcccaata atgttttttt taaatttagt ctcgtgaaaa
+  1501 aaataaaatt aaaacagaaa attacatttg cgccgaagaa acttaagatc tggaactt
+//

@@ -50,28 +50,72 @@ shinyUI(
                      mainPanel(
                          h3("Make your own construct:"),
                     fluidRow(
-                        column(4,
-                               tags$div(id="piBoxes",
-                                        class="my_class",
-                        textAreaInput("piRNAseq1", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 1"),
-                        textAreaInput("piRNAseq2", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 2"),
-                        textAreaInput("piRNAseq3", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 3"),
-                        textAreaInput("piRNAseq4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 4"),
-                        textAreaInput("piRNAseq5", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 5"),
-                        textAreaInput("piRNAseq6", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 6")),
-                        br(),
+                        ##Chose cluster
+                        
                         radioButtons("clustercon", label = HTML("Select piRNA cluster
                                                      [<a href=\"\" onclick=\"$('#explain_cluster').toggle(); return false;\">info</a>]
                                                      "),
-                                     choices = list("21ur-1224" = 1), selected = 1, width='100%'),
+                                     choices = list("21ur-1224" = 1, "21ur-1692" = 2, "21ur-8831" = 3, "21ur-1610" = 4), selected = 1, width='100%', inline= TRUE),
                         HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_cluster\">
-            For the moment, we use the cluster 21ur-1224 as a template to express 6 piRNAis fragments that are antisente to the transcript being targeted
+            We recommend to use the cluster 21ur-1224.
                                      </div></p>
-                     ")),
+                     "),
+                        conditionalPanel(condition = "input.clustercon==1",
+                        column(4,
+                               tags$div(id="piBoxes",
+                                        class="my_class",
+                        textAreaInput("piRNAseq1_1", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 1"),
+                        textAreaInput("piRNAseq2_1", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 2"),
+                        textAreaInput("piRNAseq3_1", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 3"),
+                        textAreaInput("piRNAseq4_1", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 4"),
+                        textAreaInput("piRNAseq5_1", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 5"),
+                        textAreaInput("piRNAseq6_1", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 6")),
+                        br()
+                        )),
+                        conditionalPanel(condition = "input.clustercon==2",
+                        column(4,
+                               tags$div(id="piBoxes",
+                                        class="my_class",
+                        textAreaInput("piRNAseq1_2", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 1"),
+                        textAreaInput("piRNAseq2_2", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 2"),
+                        textAreaInput("piRNAseq3_2", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 3"),
+                        textAreaInput("piRNAseq4_2", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 4"),
+                        textAreaInput("piRNAseq5_2", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 5"),
+                        textAreaInput("piRNAseq6_2", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 6")),
+                        br()
+                        )),
+                        conditionalPanel(condition = "input.clustercon==3",
+                        column(4,
+                               tags$div(id="piBoxes",
+                                        class="my_class",
+                        textAreaInput("piRNAseq1_3", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 1"),
+                        textAreaInput("piRNAseq2_3", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 2"),
+                        textAreaInput("piRNAseq3_3", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 3"),
+                        textAreaInput("piRNAseq4_3", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 4"),
+                        textAreaInput("piRNAseq5_3", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 5"),
+                        textAreaInput("piRNAseq6_3", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 6"),
+                        textAreaInput("piRNAseq7_3", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 7")),
+                        br()
+                        )),
+                        conditionalPanel(condition = "input.clustercon==4",
+                        column(4,
+                               tags$div(id="piBoxes",
+                                        class="my_class",
+                        textAreaInput("piRNAseq1_4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 1"),
+                        textAreaInput("piRNAseq2_4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 2"),
+                        textAreaInput("piRNAseq3_4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 3"),
+                        textAreaInput("piRNAseq4_4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 4"),
+                        textAreaInput("piRNAseq5_4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 5"),
+                        textAreaInput("piRNAseq6_4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 6"),
+                        textAreaInput("piRNAseq7_4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 7"),
+                        textAreaInput("piRNAseq8_4", label="", rows=1, cols=21, resize="none", placeholder = "piRNA 8")),
+                        br()
+                        )),
                         column(8,
                         verbatimTextOutput("AdvancedFragment"),
-                        uiOutput("downloadconstruct"))),
+                        uiOutput("downloadconstruct"))
+                        ),
                         
                      fluidRow(
                          column(2,actionButton("actionclean", label = "Reset")),

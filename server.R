@@ -205,102 +205,24 @@ shinyServer(function(input, output, session) {
                     seq6=as.character(Seltab[idx[6],2])
                     siete="tcaatctagtaaactcacttaatgcaattcctccagccacatatgtaaacgttgtatacatgcagaaaacggttttttggttttaatgggaacttttgacaaattgttcgaaaatcttaagctgtcccatttcagttgggtgatcgattt"
                     siete=tolower(siete)
-                        #write(paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete),sep="",collapse=""),paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""))
 
-                    write(paste("LOCUS",paste(wbid,"_21ur_1224_",sep="",collapse=""),"1344 bp ds-DNA","linear",paste(c(unlist(strsplit(date()," ")))[c(3,2,5)],sep="",collapse="-"),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""))
-                    write(paste("DEFINITION",".",sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("ACCESSION",".",sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("VERSION",".",sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("SOURCE",".",sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("ORGANISM","C.elegans",sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
+                    xtracom=paste("Recoded 21ur-1224 locus. Parameters: Gene = ",wbid,"; Isoform = ",isoform,"; Up to ",mm," mismatches")
+                    binrev=c(FALSE, TRUE, TRUE, FALSE, TRUE, FALSE)
                     if(ControlEx){
-                        write(paste("COMMENT     ",paste("Control experiment: piRNAi Sequences have been reverse complemented. THIS FRAGMENT WONT SILENCE THE SELECTED GENE"),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
+                       xtracom = append(xtracom,"Control experiment: piRNAi Sequences have been reverse complemented. THIS FRAGMENT WONT SILENCE THE SELECTED GENE")
+                       binrev=!binrev
                     }
-                    write(paste("COMMENT     ",paste("Recoded 21ur-1224 locus. Parameters: Gene =",wbid,"; Isoform = ",isoform,"; Up to",mm,"mismatches"),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("COMMENT",paste("piRNA1",as.character(Seltab[idx[1],2])),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("COMMENT",paste("piRNA2",as.character(Seltab[idx[2],2])),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("COMMENT",paste("piRNA3",as.character(Seltab[idx[3],2])),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("COMMENT",paste("piRNA4",as.character(Seltab[idx[4],2])),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("COMMENT",paste("piRNA5",as.character(Seltab[idx[5],2])),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("COMMENT",paste("piRNA6",as.character(Seltab[idx[6],2])),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("COMMENT","Generated using wormbuilder.dev/piRNAi/",sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("COMMENT","",sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("COMMENT","ApEinfo:methylated:1",sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("FEATURES             Location/Qualifiers",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     primer_bind     152..171",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/locus_tag=","\"",isoform," piRNA1\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/ApEinfo_label=","\"",isoform," piRNA1\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     primer_bind     complement(332..351)",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/locus_tag=","\"",isoform," piRNA2\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/ApEinfo_label=","\"",isoform," piRNA2\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     primer_bind     complement(501..520)",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/locus_tag=","\"",isoform," piRNA3\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/ApEinfo_label=","\"",isoform," piRNA3\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     primer_bind     825..844",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/locus_tag=","\"",isoform," piRNA4\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/ApEinfo_label=","\"",isoform," piRNA4\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     primer_bind     complement(1051..1070)",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/locus_tag=","\"",isoform," piRNA5\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/ApEinfo_label=","\"",isoform," piRNA5\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     primer_bind     1175..1194",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/locus_tag=","\"",isoform," piRNA6\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ",paste("/ApEinfo_label=","\"",isoform," piRNA6\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(readLines("WorkingSpace/Piconst.txt"),paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    
+
                     Compseq=paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete),sep="",collapse="")
-                    Compseq=unlist(strsplit(Compseq,""))
                     
-                    partseq=c()
+                    toadd="/home/velazqam/Documents/Projects/Git_repositories/piRNABuilder/WorkingSpace/Piconst2.txt"
                     
-                    for(i in seq(1,length(Compseq),10)){
-                        endseq=i+9
-                        if(length(Compseq)-i < 9){endseq=length(Compseq)}
-                        partseq=append(partseq,paste(Compseq[i:endseq],collapse=""))
-                        
-                    }
-                    
-                    write(paste("        1 ",paste(partseq[1:6],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("       61 ",paste(partseq[7:12],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      121 ",paste(partseq[13:18],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      181 ",paste(partseq[19:24],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      241 ",paste(partseq[25:30],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      301 ",paste(partseq[31:36],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      361 ",paste(partseq[37:42],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      421 ",paste(partseq[43:48],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      481 ",paste(partseq[49:54],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      541 ",paste(partseq[55:60],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      601 ",paste(partseq[61:66],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      661 ",paste(partseq[67:72],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      721 ",paste(partseq[73:78],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      781 ",paste(partseq[79:84],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      841 ",paste(partseq[85:90],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      901 ",paste(partseq[91:96],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("      961 ",paste(partseq[97:102],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     1021 ",paste(partseq[103:108],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     1081 ",paste(partseq[109:114],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     1141 ",paste(partseq[115:120],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     1201 ",paste(partseq[121:126],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     1261 ",paste(partseq[127:132],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write(paste("     1321 ",paste(partseq[133:length(partseq)],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
-                    write("//",paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""), append=T)
+                    pats= c(seq1,seq2,seq3,seq4,seq5,seq6)
+                    fwdc= c(rep("#00ff00",6))
+                    revc= c(rep("#ff0000",6))
+                    tooltis= paste("piRNA",1:6)
+
+                    writeLines(PasteApe(paste(wbid,"_21ur_1224_",sep="",collapse=""),Compseq,pats,fwdc,revc,tooltis,xtracom,toadd,binrev,"C.elegans"),paste("WorkingSpace/users/",session_id,"/piRNAs.txt", sep=""))
                     
                     output$SimpleFragment <- renderText({
                         paste("Recoded 21ur-1224 piRNA cluster\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
@@ -315,16 +237,20 @@ shinyServer(function(input, output, session) {
     }, ignoreInit = T)
     
     ###Advanced construct######
+    ####Dirty coded addition of extra clusters
     observeEvent(input$actionconstruct, {
         AdvancedErrorFlag=0
         output$AdvancedErrorMessage <- renderText({})
-        
-        pipi1=as.character(input$piRNAseq1)
-        pipi2=as.character(input$piRNAseq2)
-        pipi3=as.character(input$piRNAseq3)
-        pipi4=as.character(input$piRNAseq4)
-        pipi5=as.character(input$piRNAseq5)
-        pipi6=as.character(input$piRNAseq6)
+        clust=as.character(input$clustercon)
+
+        if(clust == "1"){
+
+        pipi1=as.character(input$piRNAseq1_1)
+        pipi2=as.character(input$piRNAseq2_1)
+        pipi3=as.character(input$piRNAseq3_1)
+        pipi4=as.character(input$piRNAseq4_1)
+        pipi5=as.character(input$piRNAseq5_1)
+        pipi6=as.character(input$piRNAseq6_1)
         
         ##Check for size
         if((nchar(pipi1) == 0) | (nchar(pipi2) == 0) | (nchar(pipi3) == 0) | (nchar(pipi4) == 0) | (nchar(pipi5) == 0) | (nchar(pipi6) == 0)){
@@ -386,97 +312,19 @@ shinyServer(function(input, output, session) {
                 siete="tcaatctagtaaactcacttaatgcaattcctccagccacatatgtaaacgttgtatacatgcagaaaacggttttttggttttaatgggaacttttgacaaattgttcgaaaatcttaagctgtcccatttcagttgggtgatcgattt"
                 siete=tolower(siete)
                 
-                write(paste("LOCUS",paste("Undefined_21ur_1224_",sep="",collapse=""),"1344 bp ds-DNA","linear",paste(c(unlist(strsplit(date()," ")))[c(3,2,5)],sep="",collapse="-"),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""))
-                write(paste("DEFINITION",".",sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("ACCESSION",".",sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("VERSION",".",sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("SOURCE",".",sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("ORGANISM",".",sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT     ",paste("Recoded 21ur-1224 locus."),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT",paste("piRNA1",as.character(pipi1)),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT",paste("piRNA2",as.character(pipi2)),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT",paste("piRNA3",as.character(pipi3)),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT",paste("piRNA4",as.character(pipi4)),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT",paste("piRNA5",as.character(pipi5)),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT",paste("piRNA6",as.character(pipi6)),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT","Generated using wormbuilder.dev/piRNAi/",sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT","",sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("COMMENT","ApEinfo:methylated:1",sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("FEATURES             Location/Qualifiers",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     primer_bind     152..171",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/locus_tag=","\"piRNA1\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/ApEinfo_label=","\"piRNA1\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     primer_bind     complement(332..351)",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/locus_tag=","\"piRNA2\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/ApEinfo_label=","\"piRNA2\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     primer_bind     complement(501..520)",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/locus_tag=","\"piRNA3\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/ApEinfo_label=","\"piRNA3\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     primer_bind     825..844",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/locus_tag=","\"piRNA4\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/ApEinfo_label=","\"piRNA4\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     primer_bind     complement(1051..1070)",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/locus_tag=","\"piRNA5\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/ApEinfo_label=","\"piRNA5\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     primer_bind     1175..1194",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/locus_tag=","\"piRNA6\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ",paste("/ApEinfo_label=","\"piRNA6\"",sep="",collapse=""),sep="     "), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_fwdcolor=\"#00ff00\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_revcolor=\"#ff0000\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(readLines("WorkingSpace/Piconst.txt"),paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
+                xtracom=paste("Recoded 21ur-1224 locus via Advanced Search.")
+                binrev=c(FALSE, TRUE, TRUE, FALSE, TRUE, FALSE)
                 
                 Compseq=paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete),sep="",collapse="")
-                Compseq=unlist(strsplit(Compseq,""))
                 
-                partseq=c()
+                toadd="/home/velazqam/Documents/Projects/Git_repositories/piRNABuilder/WorkingSpace/Piconst2.txt"
                 
-                for(i in seq(1,length(Compseq),10)){
-                    endseq=i+9
-                    if(length(Compseq)-i < 9){endseq=length(Compseq)}
-                    partseq=append(partseq,paste(Compseq[i:endseq],collapse=""))
-                    
-                }
+                pats= c(seq1,seq2,seq3,seq4,seq5,seq6)
+                fwdc= c(rep("#00ff00",6))
+                revc= c(rep("#ff0000",6))
+                tooltis= paste("piRNA",1:6)
                 
-                write(paste("        1 ",paste(partseq[1:6],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("       61 ",paste(partseq[7:12],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      121 ",paste(partseq[13:18],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      181 ",paste(partseq[19:24],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      241 ",paste(partseq[25:30],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      301 ",paste(partseq[31:36],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      361 ",paste(partseq[37:42],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      421 ",paste(partseq[43:48],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      481 ",paste(partseq[49:54],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      541 ",paste(partseq[55:60],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      601 ",paste(partseq[61:66],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      661 ",paste(partseq[67:72],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      721 ",paste(partseq[73:78],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      781 ",paste(partseq[79:84],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      841 ",paste(partseq[85:90],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      901 ",paste(partseq[91:96],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("      961 ",paste(partseq[97:102],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     1021 ",paste(partseq[103:108],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     1081 ",paste(partseq[109:114],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     1141 ",paste(partseq[115:120],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     1201 ",paste(partseq[121:126],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     1261 ",paste(partseq[127:132],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write(paste("     1321 ",paste(partseq[133:length(partseq)],collapse=" "),sep=""), paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
-                write("//",paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""), append=T)
+                writeLines(PasteApe("21ur_1224_",Compseq,pats,fwdc,revc,tooltis,xtracom,toadd,binrev,"C.elegans"),paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""))
                 
                 output$AdvancedFragment <- renderText({
                     paste("Recoded 21ur-1224 piRNA cluster\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
@@ -487,9 +335,312 @@ shinyServer(function(input, output, session) {
                 })
             
             }
+        }
+
+        ##Second cluster
+        
+        if(clust == "2"){
+
+        pipi1=as.character(input$piRNAseq1_2)
+        pipi2=as.character(input$piRNAseq2_2)
+        pipi3=as.character(input$piRNAseq3_2)
+        pipi4=as.character(input$piRNAseq4_2)
+        pipi5=as.character(input$piRNAseq5_2)
+        pipi6=as.character(input$piRNAseq6_2)
+        
+        ##Check for size
+        if((nchar(pipi1) == 0) | (nchar(pipi2) == 0) | (nchar(pipi3) == 0) | (nchar(pipi4) == 0) | (nchar(pipi5) == 0) | (nchar(pipi6) == 0)){
+            AdvancedErrorFlag=1
+            output$AdvancedErrorMessage <- renderText({
+                paste("Please pick at least 6 synthetic piRNAs")
+            })
+        }
+        
+        if(AdvancedErrorFlag == 0){
+        if((nchar(pipi1) != 20) | (nchar(pipi2) != 20) | (nchar(pipi3) != 20) | (nchar(pipi4) != 20) | (nchar(pipi5) != 20) | (nchar(pipi6) != 20)){
+            AdvancedErrorFlag=1
+            output$AdvancedErrorMessage <- renderText({
+                paste("Error: piRNAi sequences should be 20bp long")
+            })
+            }}
+        
+        #Check for input characters
+        toto=paste(pipi1,pipi2,pipi3,pipi4,pipi5,pipi6,sep="",collapse="")
+        if((AdvancedErrorFlag == 0) & (nchar(gsub("A|T|C|G","",toupper(toto))) != 0)){ ##Check for strange non ATCG characters
+            output$AdvancedErrorMessage <- renderText({
+                paste("Error: Unrecognized characters in piRNAi sequences")
+            })
+            AdvancedErrorFlag=1
+        }
+        
+        #Checkfor GC
+        if(AdvancedErrorFlag == 0){
+        Gcvals=sapply(c(pipi1,pipi2,pipi3,pipi4,pipi5,pipi6),CalculateGC)
+        if((sum(Gcvals <.3)+sum(Gcvals >.7))>0){
+            output$AdvancedErrorMessage <- renderText({
+                paste("Warning: some sequences have a GC content lower to 30% or higher to 70%")
+            })
+        }
+        }
+        
+        ##Main Routine
+        if(AdvancedErrorFlag == 0){
+            output$downloadconstruct <- renderUI({
+            
+                uno="ttcgtggtgcacttatctttctccttcaaattgaaaactcagtttttaattatagtcaaatctcttttgctgacaggtccaaagtactttattatttcatattatataaaattcattctcgaatttatttataaattttcgctgagtcaa"
+                uno=tolower(uno)
+                seq1=as.character(reverseComplement(DNAString(as.character(pipi1))))
+                dos="ActgactaacaaaaacccctgtcaatttacttgtaatgtgaaactgtatcggtttcatattatctatgattcgagtacattgtttcaaattcaaT"
+                dos=tolower(dos)
+                seq2=as.character(pipi2)
+                tres="attttacgctggtttgaaaatttgaaatattccaaaataaattatttagttttcgttttttgtacattgtcataaaacattttggttttttttaaca"
+                tres=tolower(tres)
+                seq3= as.character(reverseComplement(DNAString(as.character(pipi3))))
+                cuatro="Acttaaaatcaaaaattgttacactttataacagttcattgaaactgaaaattattttcttttcccaaataataataccatcaaatgtcgtggtgtactcatcttttccttttcttcttttttttcaatttctccttcaaatctctacacactcttcactgccaatctttttttctttccttatccaaaagcacacttttgtgcagagtaaataatgcactttgtgaaaaaaaaactatttttaaaactgtatttttttaagtttggcaatttttgagaaaatttcaacaaaatctgatatagattggaatttaaatggttcaaatttg"
+                cuatro=tolower(cuatro)
+                seq4=as.character(reverseComplement(DNAString(as.character(pipi4))))
+                cinco="AtctattcaaagttttattcgaagtttttaacagacacttgaaacagtgtaataattttctgacaaaaattaaaacaaatgttactactttgcttttcttactttatccgttttttatcacccttatttttcagtcaaccctagcaacgttaccgacggaatcggtaggactacaccgactgcatcaaatttgggaagaagccgtgagaatttgagtttcaatcaacaccgcccagaccatccttcgtcatattttgatagtttggagcatggtgagcattttatattaaaacagttgttttggtgttcatattactaatgtctgaatactaacttgcattaaaattggaaattaaaaaaattactgtttctcaaaagtattttcaatacctatatttttttgctacagT"
+                cinco=tolower(cinco)
+                seq5= as.character(pipi5)
+                seis="caatattttcaaatattttataccagatttttcgaaaaagttgaattttcaattaacaataacgcatttatgcatttttcactcttttttgagatttaatgctgaaaaaatagttctgaaaatgacaaaagttatgttttcaatattttttatcaaactaaatttatttaatttgttaactgttgcttttttgtttttcttcaagt"
+                seis=tolower(seis)
+                seq6=as.character(reverseComplement(DNAString(as.character(pipi6))))
+                siete="Atcttcgaagcaacttatttgatgttttataaacgacctgaaacatactggtgatgcccaataatgttttttttaaatttagtctcgtgaaaaaaataaaattaaaacagaaaattacatttgcgccgaagaaacttaagatctggaactt"
+                siete=tolower(siete)
+                
+                xtracom=paste("Recoded 21ur-1692 locus via Advanced Search.")
+                binrev=c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE)
+                
+                Compseq=paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete),sep="",collapse="")
+                
+                toadd=""
+                
+                pats= c(seq1,seq2,seq3,seq4,seq5,seq6)
+                fwdc= c(rep("#00ff00",6))
+                revc= c(rep("#ff0000",6))
+                tooltis= paste("piRNA",1:6)
+                
+                writeLines(PasteApe("_21ur-1692_",Compseq,pats,fwdc,revc,tooltis,xtracom,toadd,binrev,"C.elegans"),paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""))
+                
+                output$AdvancedFragment <- renderText({
+                    paste("Recoded 21ur-1692 piRNA cluster\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
+                })
+                
+            downloadButton('DownConOut', 'Download annotated genbank file')
+            
+                })
+            
+            }
+        }
+
+        ###Third cluster
+
+        if(clust == "3"){
+
+        pipi1=as.character(input$piRNAseq1_3)
+        pipi2=as.character(input$piRNAseq2_3)
+        pipi3=as.character(input$piRNAseq3_3)
+        pipi4=as.character(input$piRNAseq4_3)
+        pipi5=as.character(input$piRNAseq5_3)
+        pipi6=as.character(input$piRNAseq6_3)
+        pipi7=as.character(input$piRNAseq7_3)
+        
+        ##Check for size
+        if((nchar(pipi1) == 0) | (nchar(pipi2) == 0) | (nchar(pipi3) == 0) | (nchar(pipi4) == 0) | (nchar(pipi5) == 0) | (nchar(pipi6) == 0)| (nchar(pipi7) == 0)){
+            AdvancedErrorFlag=1
+            output$AdvancedErrorMessage <- renderText({
+                paste("Please pick at least 7 synthetic piRNAs")
+            })
+        }
+        
+        if(AdvancedErrorFlag == 0){
+        if((nchar(pipi1) != 20) | (nchar(pipi2) != 20) | (nchar(pipi3) != 20) | (nchar(pipi4) != 20) | (nchar(pipi5) != 20) | (nchar(pipi6) != 20)| (nchar(pipi7) != 20)){
+            AdvancedErrorFlag=1
+            output$AdvancedErrorMessage <- renderText({
+                paste("Error: piRNAi sequences should be 20bp long")
+            })
+            }}
+        
+        #Check for input characters
+        toto=paste(pipi1,pipi2,pipi3,pipi4,pipi5,pipi6,pipi7,sep="",collapse="")
+        if((AdvancedErrorFlag == 0) & (nchar(gsub("A|T|C|G","",toupper(toto))) != 0)){ ##Check for strange non ATCG characters
+            output$AdvancedErrorMessage <- renderText({
+                paste("Error: Unrecognized characters in piRNAi sequences")
+            })
+            AdvancedErrorFlag=1
+        }
+        
+        #Checkfor GC
+        if(AdvancedErrorFlag == 0){
+        Gcvals=sapply(c(pipi1,pipi2,pipi3,pipi4,pipi5,pipi6,pipi7),CalculateGC)
+        if((sum(Gcvals <.3)+sum(Gcvals >.7))>0){
+            output$AdvancedErrorMessage <- renderText({
+                paste("Warning: some sequences have a GC content lower to 30% or higher to 70%")
+            })
+        }
+        }
+        
+        ##Main Routine
+        if(AdvancedErrorFlag == 0){
+            output$downloadconstruct <- renderUI({
+            
+                uno="agggtggtcgcatagaagttgggcgcacttcatttacaaaaatatgttcaaattttgtgatttcatgttcaggcattttgttttgatgataaaacatagtgtgactgtttttatatgtttataaaatgtcttatgattaaacaagatcaaT"
+                uno=tolower(uno)
+                seq1=as.character(pipi1)
+                dos="aaatgtcggtttatttcacactgataggaatttttcaaaaaaatatatcagcaaagtactgtattaaaatgtgaaaatctcataaaaagtttaagtttca"
+                dos=tolower(dos)
+                seq2=as.character(reverseComplement(DNAString(as.character(pipi2))))
+                tres="ATtgtggcaaatagattttgacaatttttatcaaattcatgaaacagtagaattttttccaaaaaactcacaaaataaatacgaatttcaatttgcccactttatcaaataaatgtttacacaaaagtaggccgtgcaacgcgcctatcctagatgctacattccttggttttgagttgtgaaacgttggaataatgtacttcattttgtgacttacttttttgtaaggcaattgttttttttatttaataaaagtactttcctaaattcaaatatcaaatttgtcttcatttttgtgacaagtaaaa"
+                tres=tolower(tres)
+                seq3= as.character(reverseComplement(DNAString(as.character(pipi3))))
+                cuatro="Agcttttttagaaaaaaaaagtcagtatttaagaacaatttgaaacagttcaatttttcagtgtaatttccaaccagaactttttgagtaaataattacagaaaacttatttagaaaataggactaaataatgcaaatattttccggactggcatttataaataagcaagtataag"
+                cuatro=tolower(cuatro)
+                seq4=as.character(reverseComplement(DNAString(as.character(pipi4))))
+                cinco="AttgaggtaattttaaaaagcatacatataagcaagtcgtgaaacagtcgtttaaattttatttttcaaaaagttataacgcgacagcagtttcatctgtttcatattccctatttgttgaaatttgagacgtattttacgaT"
+                cinco=tolower(cinco)
+                seq5= as.character(pipi5)
+                seis="tgccatccgaatcttgaactttgtatcaattgttcacatttttttccaaaaacgtattaactcactttca"
+                seis=tolower(seis)
+                seq6=as.character(reverseComplement(DNAString(as.character(pipi6))))
+                siete="AtcttttgtttttaacaaagagatcatatatactcattgagaaacagtacattttttgaaagtacatttgccttggtcaaatatataaagttgacaaaagtttaaaaatgtttccaaaagttaattaaaaaatcaaatttattctagctcaaT"
+                siete=tolower(siete)
+                seq7=as.character(pipi7)
+                ocho="cgtcaagtgatcaaaccatcatttttttcagattaagacctgatttgtcagtgaattgaaaaaaacgtgttcattgcgtgtttcgcattttttatatataaaaaagcaagtttcggcggcaataacgaagtattcccaacagatcaatag"
+                ocho=tolower(ocho)
+                
+                xtracom=paste("Recoded 21ur-8831 locus via Advanced Search.")
+                binrev=c(FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)
+                
+                Compseq=paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete,seq7,ocho),sep="",collapse="")
+                
+                toadd=""
+                
+                pats= c(seq1,seq2,seq3,seq4,seq5,seq6,seq7)
+                fwdc= c(rep("#00ff00",7))
+                revc= c(rep("#ff0000",7))
+                tooltis= paste("piRNA",1:7)
+                
+                writeLines(PasteApe("21ur-8831_",Compseq,pats,fwdc,revc,tooltis,xtracom,toadd,binrev,"C.elegans"),paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""))
+                
+                output$AdvancedFragment <- renderText({
+                    paste("Recoded 21ur-8831 piRNA cluster\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
+                })
+                
+            downloadButton('DownConOut', 'Download annotated genbank file')
+            
+                })
+            
+            }
+        }
+
+        ###Fourth
+        
+        if(clust == "4"){
+
+        pipi1=as.character(input$piRNAseq1_4)
+        pipi2=as.character(input$piRNAseq2_4)
+        pipi3=as.character(input$piRNAseq3_4)
+        pipi4=as.character(input$piRNAseq4_4)
+        pipi5=as.character(input$piRNAseq5_4)
+        pipi6=as.character(input$piRNAseq6_4)
+        pipi7=as.character(input$piRNAseq7_4)
+        pipi8=as.character(input$piRNAseq8_4)
+
+        ##Check for size
+        if((nchar(pipi1) == 0) | (nchar(pipi2) == 0) | (nchar(pipi3) == 0) | (nchar(pipi4) == 0) | (nchar(pipi5) == 0) | (nchar(pipi6) == 0)| (nchar(pipi7) == 0)| (nchar(pipi8) == 0)){
+            AdvancedErrorFlag=1
+            output$AdvancedErrorMessage <- renderText({
+                paste("Please pick at least 8 synthetic piRNAs")
+            })
+        }
+        
+        if(AdvancedErrorFlag == 0){
+        if((nchar(pipi1) != 20) | (nchar(pipi2) != 20) | (nchar(pipi3) != 20) | (nchar(pipi4) != 20) | (nchar(pipi5) != 20) | (nchar(pipi6) != 20)| (nchar(pipi7) != 20)| (nchar(pipi8) != 20)){
+            AdvancedErrorFlag=1
+            output$AdvancedErrorMessage <- renderText({
+                paste("Error: piRNAi sequences should be 20bp long")
+            })
+            }}
+        
+        #Check for input characters
+        toto=paste(pipi1,pipi2,pipi3,pipi4,pipi5,pipi6,pipi7,pipi8,sep="",collapse="")
+        if((AdvancedErrorFlag == 0) & (nchar(gsub("A|T|C|G","",toupper(toto))) != 0)){ ##Check for strange non ATCG characters
+            output$AdvancedErrorMessage <- renderText({
+                paste("Error: Unrecognized characters in piRNAi sequences")
+            })
+            AdvancedErrorFlag=1
+        }
+        
+        #Checkfor GC
+        if(AdvancedErrorFlag == 0){
+        Gcvals=sapply(c(pipi1,pipi2,pipi3,pipi4,pipi5,pipi6,pipi7,pipi8),CalculateGC)
+        if((sum(Gcvals <.3)+sum(Gcvals >.7))>0){
+            output$AdvancedErrorMessage <- renderText({
+                paste("Warning: some sequences have a GC content lower to 30% or higher to 70%")
+            })
+        }
+        }
+        
+        ##Main Routine
+        if(AdvancedErrorFlag == 0){
+            output$downloadconstruct <- renderUI({
+            
+                uno="caaaaaacaatacgtcccttatcttctggaatcagctcattgtgctcatcggagctatccgcaccgtcaactatactcgctagatcttccgtgttctgatcttgagtgtatagtggaggggggtcaacctgaaatttcagatttttgttg"
+                uno=tolower(uno)
+                seq1=as.character(reverseComplement(DNAString(as.character(pipi1))))
+                dos="ActgttttagaagtgatgagtcttattataataacttgttgaaactgtggatttatattttttaaaaattaccggcgaaattgattcataatctcttattaccatagttaaagtctctagaataagcacaaaactactaaagtttgtaaaataattgaatatgccacaactgataagagactttttcctcttatcagcataaagtccaaagcgataaaattcaaaagagacaagtacaaatgtatattaatctgctttgttggaaaaaaattaaactttttatctaaacctgtcattgatccaaaagattaagtttcctgcaaaattgtttcgaaatattattgtgattgaaacttttgactttttcaacttatcaataagtcattggcttaagataaagtaatcaaT"
+                dos=tolower(dos)
+                seq2=as.character(pipi2)
+                tres="cgcgctcagcactcaatttctgcccaaatagtt"
+                tres=tolower(tres)
+                seq3= as.character(reverseComplement(DNAString(as.character(pipi3))))
+                cuatro="Attgagtatctaaatgaaaacctaaaatatgaacagttagaaacaggaaatttttgaaaagttaaaaaacaacctatacaattaatttccaagaaaaatttaacaatcgattttcatttctgaaatcccaaaatcggtgaattcttgatgaaaatgcatttgaaaatacaattttgtttta"
+                cuatro=tolower(cuatro)
+                seq4=as.character(reverseComplement(DNAString(as.character(pipi4))))
+                cinco="Atctaattagatatgcaagcctaatatttgtatcattcttgaaactgtaaataaaaaatgtttgcaaaaaaaatcaattttttagcgaatgttaacataaaaccttaaatttttctgggttttgaccgtttctcatatttcaaaa"
+                cinco=tolower(cinco)
+                seq5= as.character(reverseComplement(DNAString(as.character(pipi5))))
+                seis="AtcgaT"
+                seis=tolower(seis)
+                seq6=as.character(pipi6)
+                siete="aaaaaatatgctgaaacgtgattgctttttgtgcttttttatacaagtttgcaatcgcacaaatcatatgaaaaattattaagcacgcttaaactatgtgatctgaaatacgaaaactagtatacgttaaacaggaaaaaaaaatcaactgtttcaaaatttgtgtttaatcaaattaaagttgctattccgaT"
+                siete=tolower(siete)
+                seq7=as.character(pipi7)
+                ocho="taatagttaattttcaaaatagaaagttttaaaacatcctgtttcggtatgctgatttttacagactccactttgtagttaacT"
+                ocho=tolower(ocho)
+                seq8=as.character(pipi8)
+                nueve="ggacagaaatattgatattttgccagttaccaggaaaataaattattctttgcaacatctgactttaagaataaaaactcacaaattccttttccatttctgaaatattttagtgtcctcttcccgcaaccactccctgtaaatcgaaaa"
+                nueve=tolower(nueve)
+                
+                xtracom=paste("Recoded 21ur-1610 locus via Advanced Search.")
+                binrev=c(TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
+                
+                Compseq=paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete,seq7,ocho,seq8,nueve),sep="",collapse="")
+                
+                toadd=""
+                
+                pats= c(seq1,seq2,seq3,seq4,seq5,seq6,seq7,seq8)
+                fwdc= c(rep("#00ff00",8))
+                revc= c(rep("#ff0000",8))
+                tooltis= paste("piRNA",1:8)
+                
+                writeLines(PasteApe("21ur-1610_",Compseq,pats,fwdc,revc,tooltis,xtracom,toadd,binrev,"C.elegans"),paste("WorkingSpace/users/",session_id,"/construct.txt", sep=""))
+                
+                output$AdvancedFragment <- renderText({
+                    paste("Recoded 21ur-1610 piRNA cluster\n",paste(Compseq,sep="",collapse=""),sep="",collapse="")
+                })
+                
+            downloadButton('DownConOut', 'Download annotated genbank file')
+            
+                })
+            
+            }
+        }
+
         }, ignoreInit = T)
     
-    ###Advanced search
+    ###Advanced searchform
+    ###Only upon retrieval of a gene in database new form will appear
     observeEvent(input$actionAdvsearch, {
         
         type="Not"
@@ -562,6 +713,9 @@ shinyServer(function(input, output, session) {
         
         
         }, ignoreInit = T)
+    
+    ###Observe function for adding fragments based on piRNA table
+    ##############################################################
     
     observeEvent(input$AdvIsoform,{
         ##Now design table; NOt sure if it will work as table should be most of the time be out of observe functions
@@ -642,53 +796,311 @@ shinyServer(function(input, output, session) {
     
     #Handle id-seq of dynamic button
     observeEvent(input$select_button, {
+        clust=as.character(input$clustercon)
         fill=0
         selectedSeq <- as.character(strsplit(input$select_button, "_")[[1]][2])
         
+        if(clust == "1"){
         if(fill == 0){
-        if(as.character(input$piRNAseq1)==""){
-            updateTextAreaInput(session, "piRNAseq1", value = selectedSeq)
+        if(as.character(input$piRNAseq1_1)==""){
+            updateTextAreaInput(session, "piRNAseq1_1", value = selectedSeq)
             fill = 1
         }}
         
         if(fill == 0){
-            if(as.character(input$piRNAseq2)==""){
-                updateTextAreaInput(session, "piRNAseq2", value = selectedSeq)
+            if(as.character(input$piRNAseq2_1)==""){
+                updateTextAreaInput(session, "piRNAseq2_1", value = selectedSeq)
                 fill = 1
             }}
         
         if(fill == 0){
-            if(as.character(input$piRNAseq3)==""){
-                updateTextAreaInput(session, "piRNAseq3", value = selectedSeq)
+            if(as.character(input$piRNAseq3_1)==""){
+                updateTextAreaInput(session, "piRNAseq3_1", value = selectedSeq)
                 fill = 1
             }}
         
         if(fill == 0){
-            if(as.character(input$piRNAseq4)==""){
-                updateTextAreaInput(session, "piRNAseq4", value = selectedSeq)
+            if(as.character(input$piRNAseq4_1)==""){
+                updateTextAreaInput(session, "piRNAseq4_1", value = selectedSeq)
                 fill = 1
             }}
         
         if(fill == 0){
-            if(as.character(input$piRNAseq5)==""){
-                updateTextAreaInput(session, "piRNAseq5", value = selectedSeq)
+            if(as.character(input$piRNAseq5_1)==""){
+                updateTextAreaInput(session, "piRNAseq5_1", value = selectedSeq)
                 fill = 1
             }}
         
         if(fill == 0){
-            if(as.character(input$piRNAseq6)==""){
-                updateTextAreaInput(session, "piRNAseq6", value = selectedSeq)
+            if(as.character(input$piRNAseq6_1)==""){
+                updateTextAreaInput(session, "piRNAseq6_1", value = selectedSeq)
                 fill = 1
             }}
         
         ##Send custom message
         if(fill == 0){
             showNotification("Construct has already 6 sequences.")
+        }
+        }
+        
+        ##Second
+        if(clust == "2"){
+            if(fill == 0){
+                if(as.character(input$piRNAseq1_2)==""){
+                    updateTextAreaInput(session, "piRNAseq1_2", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq2_2)==""){
+                    updateTextAreaInput(session, "piRNAseq2_2", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq3_2)==""){
+                    updateTextAreaInput(session, "piRNAseq3_2", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq4_2)==""){
+                    updateTextAreaInput(session, "piRNAseq4_2", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq5_2)==""){
+                    updateTextAreaInput(session, "piRNAseq5_2", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq6_2)==""){
+                    updateTextAreaInput(session, "piRNAseq6_2", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            ##Send custom message
+            if(fill == 0){
+                showNotification("Construct has already 6 sequences.")
             }
+        }
+        
+        ##Third
+        if(clust == "3"){
+            if(fill == 0){
+                if(as.character(input$piRNAseq1_3)==""){
+                    updateTextAreaInput(session, "piRNAseq1_3", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq2_3)==""){
+                    updateTextAreaInput(session, "piRNAseq2_3", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq3_3)==""){
+                    updateTextAreaInput(session, "piRNAseq3_3", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq4_3)==""){
+                    updateTextAreaInput(session, "piRNAseq4_3", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq5_3)==""){
+                    updateTextAreaInput(session, "piRNAseq5_3", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq6_3)==""){
+                    updateTextAreaInput(session, "piRNAseq6_3", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq7_3)==""){
+                    updateTextAreaInput(session, "piRNAseq7_3", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            ##Send custom message
+            if(fill == 0){
+                showNotification("Construct has already 7 sequences.")
+            }
+        }
+        
+        
+        ###Four
+        if(clust == "4"){
+            if(fill == 0){
+                if(as.character(input$piRNAseq1_4)==""){
+                    updateTextAreaInput(session, "piRNAseq1_4", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq2_4)==""){
+                    updateTextAreaInput(session, "piRNAseq2_4", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq3_4)==""){
+                    updateTextAreaInput(session, "piRNAseq3_4", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq4_4)==""){
+                    updateTextAreaInput(session, "piRNAseq4_4", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq5_4)==""){
+                    updateTextAreaInput(session, "piRNAseq5_4", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq6_4)==""){
+                    updateTextAreaInput(session, "piRNAseq6_4", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq7_4)==""){
+                    updateTextAreaInput(session, "piRNAseq7_4", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            if(fill == 0){
+                if(as.character(input$piRNAseq8_4)==""){
+                    updateTextAreaInput(session, "piRNAseq8_4", value = selectedSeq)
+                    fill = 1
+                }}
+            
+            ##Send custom message
+            if(fill == 0){
+                showNotification("Construct has already 8 sequences.")
+            }
+        }
+        
         
     })
     
-    ####Other functions
+    ####Other functions###########
+    ##############################
+    
+    ###Create ApeFIle as pasteLines####
+    PasteApe = function(locus_name,sequence,patterns,FWDcolors,REVcolors,tooltips,xtraComments,xtraLines, BinRevComp, organism){
+        if (is.null(sequence)){return(NULL)}
+        if(!is.character(sequence)){return(c())}
+        if(length(patterns) < 1 ){return(c(paste(sequence)))}
+        if(length(patterns) != length(FWDcolors)){return(c())}
+        if(length(REVcolors) != length(FWDcolors)){return(c())}
+        if(length(tooltips) != length(FWDcolors)){return(c())}
+        if(length(BinRevComp)==0){BinRevComp=rep(FALSE,length(patterns))}
+        
+        ##Save Lines
+        FileLines=c()
+        FileLines=append(FileLines,paste("LOCUS",paste(locus_name,sep="",collapse=""),paste(nchar(sequence),"bp ds-DNA", sep=""),"linear",paste(c(unlist(strsplit(date()," ")))[c(3,2,5)],sep="",collapse="-"),sep="     "))
+        FileLines=append(FileLines,paste("DEFINITION",".",sep="     "))
+        FileLines=append(FileLines,paste("ACCESSION",".",sep="     "))
+        FileLines=append(FileLines,paste("VERSION",".",sep="     "))
+        FileLines=append(FileLines,paste("SOURCE",".",sep="     "))
+        FileLines=append(FileLines,paste("ORGANISM",organism,sep="     "))
+        posipat=c()
+        ##Match sequences
+        for(i in 1:length(patterns)){
+            stpos=start(matchPattern(DNAString(as.character(patterns[i])),DNAString(sequence),fixed=T))
+            edpos=end(matchPattern(DNAString(as.character(patterns[i])),DNAString(sequence),fixed=T))
+            if(length(stpos)>0){
+                posipat=rbind(posipat, cbind(stpos,edpos,rep(tooltips[i],length(stpos)),rep(FWDcolors[i],length(stpos)),rep(REVcolors[i],length(stpos))))
+            }
+        }
+        
+        if(!(is.null(posipat))){
+            colnames(posipat)=c("start","end","label","fwdc","revc")
+        }
+        
+        if(xtraComments[1] != ""){
+            FileLines=append(FileLines,paste("COMMENT",xtraComments,sep="     "))
+        }
+        
+        if(!(is.null(posipat))){
+            for(i in 1:length(patterns)){
+                tempat=as.character(patterns[i])
+                if(BinRevComp[i]){tempat=as.character(reverseComplement(DNAString(tempat)))}
+                FileLines=append(FileLines,paste("COMMENT",paste(as.character(tooltips[i]),tempat),sep="     "))
+            }
+        }
+        
+        FileLines=append(FileLines,paste("COMMENT","Generated using wormbuilder.dev/piRNAi/",sep="     "))
+        FileLines=append(FileLines,paste("COMMENT","ApEinfo:methylated:1",sep="     "))
+        
+        if(!(is.null(posipat))){
+            FileLines=append(FileLines,paste("FEATURES             Location/Qualifiers",sep=""))
+            for(n in 1:nrow(posipat)){
+                nixt= which(posipat[n,3] == tooltips)
+                if(BinRevComp[nixt]){
+                    xnoteA="complement("
+                    xnoteB=")"
+                    }else{
+                        xnoteA=""
+                        xnoteB=""
+                    }
+                FileLines=append(FileLines,paste("     primer_bind     ",xnoteA,c(posipat[n,1]),"..",c(posipat[n,2]),xnoteB,"",sep=""))
+                FileLines=append(FileLines,paste("                     ",paste("/locus_tag=","\"",c(posipat[n,3]),"\"",sep="",collapse=""),sep="     "))
+                FileLines=append(FileLines,paste("                     ",paste("/ApEinfo_label=","\"",c(posipat[n,3]),"\"",sep="",collapse=""),sep="     "))
+                FileLines=append(FileLines,paste("                     ","/ApEinfo_fwdcolor=\"",c(posipat[n,4]),"\"",sep=""))
+                FileLines=append(FileLines,paste("                     ","/ApEinfo_revcolor=\"",c(posipat[n,5]),"\"",sep=""))
+                FileLines=append(FileLines,paste("                     ","/ApEinfo_graphicformat=\"arrow_data {{0 0.5 0 1 2 0 0 -1 0 -0.5} {} 0} width 5 offset 0\"",sep=""))
+            }
+            
+        }
+        
+        if(xtraLines != ""){
+            FileLines=append(FileLines,readLines(xtraLines))
+        }
+        
+        FileLines=append(FileLines,paste("ORIGIN"))
+        
+        Compseq=unlist(strsplit(sequence,""))
+        
+        partseq=c()
+        
+        for(i in seq(1,length(Compseq),10)){
+            endseq=i+9
+            if(length(Compseq)-i < 9){endseq=length(Compseq)}
+            partseq=append(partseq,paste(Compseq[i:endseq],collapse=""))
+            
+        }
+        
+        i=1
+        for(num in seq(1,length(Compseq),60)){
+            index=as.character(num)
+            spaces=paste(rep(" ",6-nchar(index)),collapse="")
+            endseq=i+5
+            if((length(partseq)-i) < 5){endseq=length(partseq)}
+            FileLines=append(FileLines , paste(spaces,index," ",paste(partseq[i:(endseq)],collapse=" "),sep=""))
+            
+            i=i+6
+        }
+        
+        FileLines=append(FileLines,paste("//"))
+        
+        return(FileLines)
+    }
+    
     ##Retrieve output ape
     output$DownApeOut <- downloadHandler(
         filename <- function() {
@@ -721,11 +1133,41 @@ shinyServer(function(input, output, session) {
     
     ##Clean boxes
     observeEvent(input$actionclean, {
-        updateTextAreaInput(session, "piRNAseq1", value = "")
-        updateTextAreaInput(session, "piRNAseq2", value = "")
-        updateTextAreaInput(session, "piRNAseq3", value = "")
-        updateTextAreaInput(session, "piRNAseq4", value = "")
-        updateTextAreaInput(session, "piRNAseq5", value = "")
-        updateTextAreaInput(session, "piRNAseq6", value = "")
+        clust=as.character(input$clustercon)
+        if(clust == "1"){
+        updateTextAreaInput(session, "piRNAseq1_1", value = "")
+        updateTextAreaInput(session, "piRNAseq2_1", value = "")
+        updateTextAreaInput(session, "piRNAseq3_1", value = "")
+        updateTextAreaInput(session, "piRNAseq4_1", value = "")
+        updateTextAreaInput(session, "piRNAseq5_1", value = "")
+        updateTextAreaInput(session, "piRNAseq6_1", value = "")
+        }
+        if(clust == "2"){
+            updateTextAreaInput(session, "piRNAseq1_2", value = "")
+            updateTextAreaInput(session, "piRNAseq2_2", value = "")
+            updateTextAreaInput(session, "piRNAseq3_2", value = "")
+            updateTextAreaInput(session, "piRNAseq4_2", value = "")
+            updateTextAreaInput(session, "piRNAseq5_2", value = "")
+            updateTextAreaInput(session, "piRNAseq6_2", value = "")
+        }
+        if(clust == "3"){
+            updateTextAreaInput(session, "piRNAseq1_3", value = "")
+            updateTextAreaInput(session, "piRNAseq2_3", value = "")
+            updateTextAreaInput(session, "piRNAseq3_3", value = "")
+            updateTextAreaInput(session, "piRNAseq4_3", value = "")
+            updateTextAreaInput(session, "piRNAseq5_3", value = "")
+            updateTextAreaInput(session, "piRNAseq6_3", value = "")
+            updateTextAreaInput(session, "piRNAseq7_3", value = "")
+        }
+        if(clust == "4"){
+            updateTextAreaInput(session, "piRNAseq1_4", value = "")
+            updateTextAreaInput(session, "piRNAseq2_4", value = "")
+            updateTextAreaInput(session, "piRNAseq3_4", value = "")
+            updateTextAreaInput(session, "piRNAseq4_4", value = "")
+            updateTextAreaInput(session, "piRNAseq5_4", value = "")
+            updateTextAreaInput(session, "piRNAseq6_4", value = "")
+            updateTextAreaInput(session, "piRNAseq7_4", value = "")
+            updateTextAreaInput(session, "piRNAseq8_4", value = "")
+        }
         })
 })  
