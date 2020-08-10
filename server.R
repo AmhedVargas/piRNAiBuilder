@@ -215,7 +215,7 @@ shinyServer(function(input, output, session) {
 
                     Compseq=paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete),sep="",collapse="")
                     
-                    toadd="/home/velazqam/Documents/Projects/Git_repositories/piRNABuilder/WorkingSpace/Piconst2.txt"
+                    toadd="WorkingSpace/Piconst2.txt"
                     
                     pats= c(seq1,seq2,seq3,seq4,seq5,seq6)
                     fwdc= c(rep("#00ff00",6))
@@ -317,7 +317,7 @@ shinyServer(function(input, output, session) {
                 
                 Compseq=paste(c(uno,seq1,dos,seq2,tres,seq3,cuatro,seq4,cinco,seq5,seis,seq6,siete),sep="",collapse="")
                 
-                toadd="/home/velazqam/Documents/Projects/Git_repositories/piRNABuilder/WorkingSpace/Piconst2.txt"
+                toadd="WorkingSpace/Piconst2.txt"
                 
                 pats= c(seq1,seq2,seq3,seq4,seq5,seq6)
                 fwdc= c(rep("#00ff00",6))
