@@ -36,7 +36,7 @@ shinyUI(
             ###Simple
             tabPanel("Simple",
                      mainPanel(
-                         textAreaInput("geneinput", label = "Target gene", value = "", resize="none", placeholder= "WormbaseID, transcript or common name", rows=1),
+                         textAreaInput("geneinput", label = "Target gene", value = "", resize="none", placeholder= "WormbaseID, transcript or gene name", rows=1),
                          actionButton("actiongenesearch", label = "Search gene"),
                          hr(),
                          uiOutput("DesignControls"),
@@ -125,7 +125,7 @@ shinyUI(
                          column(2,actionButton("actionconstruct", label = "Generate piRNAi cluster"))),
                          verbatimTextOutput("AdvancedErrorMessage"),
                          hr(),
-                         textAreaInput("Advancedgeneinput", label = "Target gene", value = "", resize="none", placeholder= "WormbaseID, transcript or common name", rows=1),
+                         textAreaInput("Advancedgeneinput", label = "Target gene", value = "", resize="none", placeholder= "WormbaseID, transcript or gene name", rows=1),
                          actionButton("actionAdvsearch", label = "Search for specific piRNAs"),
                          hr(),
                          uiOutput("AdvDesignControls"),
