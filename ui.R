@@ -11,6 +11,9 @@ library(DT)
 # Define User interface
 shinyUI(
     fluidPage(
+        tags$head(
+            tags$link(rel="stylesheet",type = "text/css", href="bootstrap.min.css")
+        ),
         ##Costum extra styles: single sliders background and title of navbar 
         tags$style(type = 'text/css', 
                    ".js-irs-none .irs-single, .js-irs-none .irs-bar-edge, .js-irs-none .irs-bar {
@@ -28,7 +31,7 @@ shinyUI(
         navbarPage(
             title="piRNAi cluster designer",
             ###Theme of shiny
-            theme = shinytheme("sandstone"),
+            #theme = shinytheme("sandstone"),
             
             ###Simple
             tabPanel("Simple",
@@ -55,7 +58,7 @@ shinyUI(
                         radioButtons("clustercon", label = HTML("Select piRNA cluster
                                                      [<a href=\"\" onclick=\"$('#explain_cluster').toggle(); return false;\">info</a>]
                                                      "),
-                                     choices = list("21ur-1224" = 1, "21ur-1692" = 2, "21ur-8831" = 3, "21ur-1610" = 4), selected = 1, width='100%', inline= TRUE),
+                                     choices = list("21ur-1224 (6 sites)" = 1, "21ur-1692 (6 sites)" = 2, "21ur-8831 (7 sites)" = 3, "21ur-1610 (8 sites)" = 4), selected = 1, width='100%', inline= TRUE),
                         HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_cluster\">
             We recommend to use the cluster 21ur-1224.
