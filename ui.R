@@ -41,6 +41,7 @@ shinyUI(
                          hr(),
                          uiOutput("DesignControls"),
                          hr(),
+                         verbatimTextOutput("ErrorMessage"),
                          #tableOutput(otherPis),
                          htmlOutput("SelPiTabSummary"),
                          tableOutput('SelPiTab'),

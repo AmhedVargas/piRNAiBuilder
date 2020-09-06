@@ -35,13 +35,22 @@ shinyServer(function(input, output, session) {
     locus=unique(as.character(Genes[,6]))
     locus=locus[-c(which(locus == ""))]
     #file=paste(c("DataBase/",as.character(Genes[1,4]),"_",as.character(Genes[1,5]),"_",as.character(Genes[1,6]),".txt"),sep="",collapse="")
-    
+    Intr=read.table("WorkingSpace/Introns_min.tsv",sep="\t",header=F)
+    rownames(Intr)=as.character(Intr[,1])
+    ##Extranames
+    alias=read.table("WorkingSpace/Alias.txt",sep="\t", header=F, stringsAsFactors=F)
+    rownames(alias)=as.character(alias[,1])
     
     ##Main search function
     observeEvent(input$actiongenesearch, {
+        output$ErrorMessage <- renderText({})
         type="Not"
         wbid=""
         mygene =input$geneinput
+        
+        if(as.character(mygene) %in% rownames(alias)){
+            mygene=alias[as.character(mygene),2]
+        }
         
         if(as.character(mygene) %in% as.character(Genes[,4])){type=4}
         if(as.character(mygene) %in% as.character(Genes[,5])){type=5}
@@ -73,7 +82,7 @@ shinyServer(function(input, output, session) {
                             selected = 1),
                 HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_uniqueness\">
-            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans genome and verified its uniqueness up to n mismatches, i.e. even with n base pairs changed the sequence remains unique.
+            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans genome and verified its uniqueness at least to n mismatches, i.e. even with n base pairs changed the sequence remains unique.
                                                  </div></p>
                      "),
                 radioButtons("cluster", label = HTML("Select piRNA cluster
@@ -102,6 +111,7 @@ shinyServer(function(input, output, session) {
     ##Main search function
     observeEvent(input$actionPI, {
         ErrorFlag = 0
+        output$ErrorMessage <- renderText({})
         
         matches=as.integer(input$selectMM)
         mm=c(5,4,3,5,4,3)[matches]
@@ -146,12 +156,22 @@ shinyServer(function(input, output, session) {
             if(length(which(dist(Seltab[idx,1])<=20)) > 0){
                 
                 output$ErrorMessage <- renderText({
-                    paste("Error: The sole piRNAi fragments found seem overlapping. Try to change its distribution and or the parameters")
+                    paste("Error: The program selected overlapping piRNAi sites. Try to change the parameters or use Advanced function")
                 })
                 ErrorFlag=1
                 
                 }
-            }
+        }
+        
+        ##Error for at least 6 piRNAs
+        if(length(idx) < 6){
+            
+            output$ErrorMessage <- renderText({
+                paste("Error: Not enough piRNAi sites to create the cluster. Try to change the parameters or use advanced function")
+            })
+            ErrorFlag=1
+            
+        }
         
         ##Produce outputs
             if(ErrorFlag == 0){
@@ -159,16 +179,38 @@ shinyServer(function(input, output, session) {
                 ##Table results
                 Pitab=Seltab[idx,c(1,2,5)]
                 
+                #Render piRNA coordinates 1-based
+                Pitab[,1] = Pitab[,1] + 1
                 
-                Pitab[,1]=c(Pitab[,1]-genest)/(geneend-genest)
-                if(strand =="-"){Pitab[,1]= 1 - as.numeric(Pitab[,1])}
+                ##Get coords
+                if(strand =="-"){
+                    Pistrt=Pitab[,1]+19
+                    Piedt=Pitab[,1]
+                }else{
+                    Pistrt=Pitab[,1]
+                    Piedt=Pitab[,1]+19
+                }
                 
-                posssi=as.integer(Pitab[,1]*(geneend-genest))
-                Pitab=cbind(paste(as.integer(Pitab[,1]*(geneend-genest)),"to", as.integer(Pitab[,1]*(geneend-genest)) + 19),Pitab[,c(2,3)])
+                
+                ##Check if introns data
+                if(as.character(isoform) %in% rownames(Intr)){
+                    ItrS=as.numeric(unlist(strsplit(as.character(Intr[as.character(isoform),2]),",")))
+                    ItrE=as.numeric(unlist(strsplit(as.character(Intr[as.character(isoform),3]),",")))
+                }else{
+                    ItrS=c(1)
+                    ItrE=c(0)
+                    }
+                Ncoors=ConvCooTr2cDNA(Pistrt - genest +1 ,Piedt - genest +1 ,ItrS - genest +1 ,ItrE - genest+1)
+                lengcdna=(geneend-genest+1 - sum(ItrE-ItrS + 1))
+                if(strand =="-"){
+                    Ncoors[,2]= lengcdna - Ncoors[,2] + 1
+                    Ncoors[,1]= lengcdna - Ncoors[,1] + 1
+                    }
+                Pitab=cbind(paste(as.integer(Ncoors[,1]),"to", as.integer(Ncoors[,2])),Pitab[,c(2,3)])
                 
                 colnames(Pitab)=c("Location","Sequence (antisense to target)","%GC")
-                colnames(Pitab)[1]=paste("cDNA location","(",(geneend-genest),"bp long)",sep="")
-                Pitab=Pitab[order(posssi),]
+                colnames(Pitab)[1]=paste("cDNA location ","(",lengcdna,"bp long)",sep="")
+                Pitab=Pitab[order(Ncoors[,1]),]
                 
                 output$SelPiTabSummary <- renderUI({ HTML(paste0("<b>Synthetic piRNAs</b>",sep=""))})
                 output$SelPiTab=renderTable(Pitab)
@@ -206,7 +248,7 @@ shinyServer(function(input, output, session) {
                     siete="tcaatctagtaaactcacttaatgcaattcctccagccacatatgtaaacgttgtatacatgcagaaaacggttttttggttttaatgggaacttttgacaaattgttcgaaaatcttaagctgtcccatttcagttgggtgatcgattt"
                     siete=tolower(siete)
 
-                    xtracom=paste("Recoded 21ur-1224 locus. Parameters: Gene = ",wbid,"; Isoform = ",isoform,"; Up to ",mm," mismatches")
+                    xtracom=paste("Recoded 21ur-1224 locus. Parameters: Gene = ",wbid,"; Isoform = ",isoform,"; At least ",mm," mismatches")
                     binrev=c(FALSE, TRUE, TRUE, FALSE, TRUE, FALSE)
                     if(ControlEx){
                        xtracom = append(xtracom,"Control experiment: piRNAi Sequences have been reverse complemented. THIS FRAGMENT WONT SILENCE THE SELECTED GENE")
@@ -647,6 +689,10 @@ shinyServer(function(input, output, session) {
         wbid=""
         mygene =input$Advancedgeneinput
         
+        if(as.character(mygene) %in% rownames(alias)){
+            mygene=alias[as.character(mygene),2]
+        }
+        
         if(as.character(mygene) %in% as.character(Genes[,4])){type=4}
         if(as.character(mygene) %in% as.character(Genes[,5])){type=5}
         if(as.character(mygene) %in% locus){type=6}
@@ -691,7 +737,7 @@ shinyServer(function(input, output, session) {
 
                     HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_uniqueness_advanced\">
-            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans genome and verified its uniqueness up to n mismatches, i.e. even with n base pairs changed the sequence remains unique.
+            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans genome and verified its uniqueness at least to n mismatches, i.e. even with n base pairs changed the sequence remains unique.
                                                  </div></p>
                      "),
                     
@@ -734,9 +780,11 @@ shinyServer(function(input, output, session) {
         tab=read.table(file,sep="\t",header=F)
         tab[,5]=as.integer((unlist(strsplit(as.character(tab[,2]),";")))[c(FALSE,TRUE)])
         tab[,2]=as.character((unlist(strsplit(as.character(tab[,2]),";")))[c(TRUE,FALSE)])
-        tab[,1]=c(tab[,1]-genest)/(geneend-genest)
         
-        if(strand =="-"){tab[,1]= 1 - as.numeric(tab[,1])}
+        #if(strand =="-"){tab[,1]= tab[,1]+18}
+        #tab[,1]=c(tab[,1]+2-genest)/(geneend-genest+1)
+        
+        #if(strand =="-"){tab[,1]= 1 - as.numeric(tab[,1])}
         
         #output$AllPiTab <- DT::renderDataTable(DT::datatable({
         output$AllPiTab <- DT::renderDataTable({
@@ -755,20 +803,53 @@ shinyServer(function(input, output, session) {
             
             datatab = datatab[which((datatab[,5]>=minGC)&(datatab[,5]<=maxGC)),]
             
-            datatab = datatab[which((datatab[,1]>=minPos)&(datatab[,1]<=maxPos)),]
+            relpos=datatab[,1]
+            if(strand =="-"){relpos= relpos+18}
+            relpos=c(relpos+2-genest)/(geneend-genest+1)
+            if(strand =="-"){relpos= 1 - as.numeric(relpos)}
             
-            position=c()
-            for(val in datatab[,1]){
-                posssi="Unkwon"
-                if((val >= 0)&(val <= 0.25)){posssi="Proximal to 5' end"}
-                if((val >= 0.25)&(val <= 0.75)){posssi="Centered around isoform"}
-                if((val >= 0.75)&(val <= 1)){posssi="Proximal to 3' end"}
-                position=append(position,posssi)
+            datatab = datatab[which((relpos>=minPos)&(relpos<=maxPos)),]
+            
+            
+            ##Table results
+            Pitab=datatab
+            
+            #Render piRNA coordinates 1-based
+            Pitab[,1] = Pitab[,1] + 1
+            
+            ##Get coords
+            if(strand =="-"){
+                Pistrt=Pitab[,1]+19
+                Piedt=Pitab[,1]
+            }else{
+                Pistrt=Pitab[,1]
+                Piedt=Pitab[,1]+19
             }
             
+            
+            ##Check if introns data
+            if(as.character(ADVisoform) %in% rownames(Intr)){
+                ItrS=as.numeric(unlist(strsplit(as.character(Intr[as.character(ADVisoform),2]),",")))
+                ItrE=as.numeric(unlist(strsplit(as.character(Intr[as.character(ADVisoform),3]),",")))
+            }else{
+                ItrS=c(1)
+                ItrE=c(0)
+            }
+            
+            Ncoors=ConvCooTr2cDNA(Pistrt - genest +1 ,Piedt - genest +1 ,ItrS - genest +1 ,ItrE - genest+1)
+            lengcdna=(geneend-genest+1 - sum(ItrE-ItrS + 1))
+            if(strand =="-"){
+                Ncoors[,2]= lengcdna - Ncoors[,2] + 1
+                Ncoors[,1]= lengcdna - Ncoors[,1] + 1
+            }
+            
+            datatab[,1]=Ncoors[,1]
+            
+            datatab=datatab[order(Ncoors[,1]),]
+            
+
             Pdata=data.frame(
-                #Location = position,
-                Location = paste(as.integer(datatab[,1]*((geneend-genest))), "to", as.integer(datatab[,1]*((geneend-genest)))+19),
+                Location = paste(as.integer(datatab[,1]), "to", as.integer(datatab[,1])+19),
                 Sequence = datatab[,2],
                 GCcontent = datatab[,5],
                 Select = shinyInput(actionButton, as.character(datatab[,2]), 'button_', label = "Add to contruct", onclick = 'Shiny.onInputChange(\"select_button\",  this.id)' ),
@@ -776,9 +857,8 @@ shinyServer(function(input, output, session) {
                 row.names = 1:nrow(datatab)
                 )
             
-            colnames(Pdata)[1]=paste("cDNA location ","(",(geneend-genest),"bp long)",sep="")
+            colnames(Pdata)[1]=paste("cDNA location ","(",(lengcdna),"bp long)",sep="")
             colnames(Pdata)[2]="Sequence (antisense to target)"
-            Pdata=Pdata[order(as.integer(datatab[,1]*((geneend-genest)))),]
             rownames(Pdata)=1:nrow(Pdata)
             Pdata
         #},server = FALSE, escape = FALSE, selection = 'none'))
@@ -998,6 +1078,32 @@ shinyServer(function(input, output, session) {
     })
     
     ####Other functions###########
+    ##Convert coordinates
+    ConvCooTr2cDNA = function(posS, posE, ExonS, ExonE){
+        if(length(posS) != length(posE)){return(c())}
+        if((length(posS)<1) | (length(posE)<1)){return(c())}
+        if((length(ExonS)<1) | (length(ExonE)<1)){return(cbind(posS,posE))}
+        dists=ExonE - ExonS + 1
+        if(sum(dists)==0){return(cbind(posS, posE))}
+        resS=c()
+        resE=c()
+        for(i in 1:length(posS)){
+            idx=which(ExonS < posS[i])
+            if(length(idx) > 0){
+                resS=append(resS,posS[i] - sum(dists[idx]))
+            }else{
+                resS=append(resS,posS[i])
+            }
+            idx=which(ExonS < posE[i])
+            if(length(idx) > 0){
+                resE=append(resE,posE[i] - sum(dists[idx]))
+            }else{
+                resE=append(resE,posE[i])
+            }
+        }
+        return(cbind(resS, resE))
+    }
+    
     ##############################
     
     ###Create ApeFIle as pasteLines####
