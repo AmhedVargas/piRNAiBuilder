@@ -137,6 +137,14 @@ shinyServer(function(input, output, session) {
         
         Seltab=tab[which(tab[,3]>=mm),]
         
+        ##Remove Inside Introns
+        if(as.character(isoform) %in% rownames(Intr)){
+            ItrS=as.numeric(unlist(strsplit(as.character(Intr[as.character(isoform),2]),",")))
+            ItrE=as.numeric(unlist(strsplit(as.character(Intr[as.character(isoform),3]),",")))
+            idx= IRanges(Seltab[,1], Seltab[,1] + 19) %over% IRanges(ItrS,ItrE)
+            if(sum(idx) > 0){Seltab=Seltab[-which(idx),]}
+            }
+        
         if(nrow(Seltab)< 6){
             output$ErrorMessage <- renderText({
                 paste("Error: Not enough piRNAi fragments were found with the characterisitics described. Try to change to other parameters")
@@ -173,6 +181,14 @@ shinyServer(function(input, output, session) {
             
         }
         
+        #Remove if errors()
+        if(ErrorFlag == 1){
+            output$SelPiTabSummary <- renderUI({ HTML(paste0("<b>Try again!</b>",sep=""))})
+            output$SelPiTab=renderTable({})
+            output$downloadseq <- renderUI({})
+            output$SimpleFragment <- renderText({})
+            
+            }
         ##Produce outputs
             if(ErrorFlag == 0){
                 
@@ -785,6 +801,15 @@ shinyServer(function(input, output, session) {
         #tab[,1]=c(tab[,1]+2-genest)/(geneend-genest+1)
         
         #if(strand =="-"){tab[,1]= 1 - as.numeric(tab[,1])}
+        
+        ##Remove pis inside introns
+        if(as.character(ADVisoform) %in% rownames(Intr)){
+            ItrS=as.numeric(unlist(strsplit(as.character(Intr[as.character(ADVisoform),2]),",")))
+            ItrE=as.numeric(unlist(strsplit(as.character(Intr[as.character(ADVisoform),3]),",")))
+            idx= IRanges(tab[,1], tab[,1] + 19) %over% IRanges(ItrS,ItrE)
+            if(sum(idx) > 0){tab=tab[-which(idx),]}
+        }
+        
         
         #output$AllPiTab <- DT::renderDataTable(DT::datatable({
         output$AllPiTab <- DT::renderDataTable({
